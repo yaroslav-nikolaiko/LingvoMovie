@@ -10,7 +10,9 @@ import javax.persistence.*;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlTransient;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by yaroslav on 01.03.15.
@@ -44,10 +46,11 @@ public class Dictionary {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "dictionary_id")
     @XmlTransient
-    List<WordCell> wordCells;
+    Set<WordCell> wordCells;
 
     public Dictionary() {
         mediaItems = new ArrayList<>();
+        wordCells = new HashSet<>();
     }
 
 /*
