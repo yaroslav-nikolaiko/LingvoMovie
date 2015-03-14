@@ -1,7 +1,7 @@
 package lingvo.movie.core.dao;
 
 import lingvo.movie.core.Application;
-import lingvo.movie.core.entity.User;
+import lingvo.movie.core.entity.Dictionary;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,33 +10,27 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-
 import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 @Transactional
 @ActiveProfiles("test")
-public class UserRepositoryTest extends AbstractRepositoryTest{
+public class DictionaryRepositoryTest extends AbstractRepositoryTest{
+    @Autowired
+    DictionaryRepository dictionaryRepository;
     @Autowired
     UserRepository userRepository;
 
     @Test
-    public void findSavedUserById() throws Exception {
+    public void userPersistShouldCascadeToDictionaries() throws Exception {
         user = userRepository.save(user);
-
         em.clear();
 
-        assertEquals(user, userRepository.findOne(user.getId()));
-    }
+        Dictionary dictionary = user.getDictionaries().get(0);
+        Long dictionaryId = dictionary.getId();
 
-    @Test
-    public void checkEagerFetchDictionaries() throws Exception {
-        user = userRepository.save(user);
-
-        em.clear();
-
-        User admin = userRepository.findOne(user.getId());
-        assertEquals(user.getDictionaries(), admin.getDictionaries());
+        assertNotNull(dictionaryId);
+        assertEquals(dictionary, dictionaryRepository.findOne(dictionaryId));
     }
 }
