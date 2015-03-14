@@ -30,7 +30,7 @@ public class DictionaryRepositoryTest extends AbstractRepositoryTest{
         Dictionary dictionary = user.getDictionaries().get(0);
         Long dictionaryId = dictionary.getId();
 
-        assertNotNull(dictionaryId);
+        assertNotNull("Dictionary Id should not be null",dictionaryId);
         assertEquals(dictionary, dictionaryRepository.findOne(dictionaryId));
     }
 }

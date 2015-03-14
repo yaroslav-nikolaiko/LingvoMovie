@@ -34,7 +34,7 @@ public class User {
     @Column(unique = true)
     String email;
 
-    @OneToMany( cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     List<Dictionary> dictionaries;
 
