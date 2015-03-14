@@ -5,6 +5,8 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
+import javax.validation.ConstraintViolationException;
+
 import static org.junit.Assert.*;
 
 public class UserRepositoryTest extends AbstractRepositoryTest{
@@ -31,5 +33,28 @@ public class UserRepositoryTest extends AbstractRepositoryTest{
         User admin = userRepository.findOne(user.getId());
         em.clear(); //To clear L1 cache. That how we will know that dictionaries fetched EAGRly
         assertEquals(user.getDictionaries().size(), admin.getDictionaries().size());
+    }
+
+    @Test
+    public void checkOrphanRemovalDictionaries() throws Exception {
+        user = userRepository.save(user);
+        em.flush();
+        em.clear();
+
+        User admin = userRepository.findOne(user.getId());
+        admin.removeDictionary(admin.getDictionaries().get(0));
+        em.flush();
+        em.clear();
+
+        int expectedDictListSize = user.getDictionaries().size() - 1;
+        int actualDictListSize = userRepository.findOne(user.getId()).getDictionaries().size();
+        assertEquals(expectedDictListSize, actualDictListSize);
+    }
+
+    @Test(expected = ConstraintViolationException.class)
+    public void shouldFailEmailValidation() throws Exception {
+        user.setEmail("wrong.email.format");
+
+        user = userRepository.save(user);
     }
 }
