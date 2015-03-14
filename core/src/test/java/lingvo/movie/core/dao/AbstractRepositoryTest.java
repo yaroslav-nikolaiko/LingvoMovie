@@ -1,6 +1,6 @@
 package lingvo.movie.core.dao;
 
-import lingvo.movie.core.Application;
+import lingvo.movie.Application;
 import lingvo.movie.core.entity.Dictionary;
 import lingvo.movie.core.entity.User;
 import lingvo.movie.core.entity.utils.Language;

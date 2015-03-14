@@ -1,4 +1,4 @@
-package lingvo.movie.core;
+package lingvo.movie;
 
 
 import org.springframework.boot.SpringApplication;
