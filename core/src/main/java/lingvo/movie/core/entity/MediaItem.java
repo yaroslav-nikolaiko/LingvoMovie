@@ -26,12 +26,8 @@ public class MediaItem {
     @JoinTable(name="MEDIA_ITEM_META_INFO")
     @MapKeyColumn(name = "attr_name", unique = true)
     @Column(name="attr_value")
-    Map<String, String> metaInfo;
+    Map<String, String> metaInfo = new HashMap<>();
 
     @ManyToOne
     MediaContent mediaContent;
-
-    public MediaItem() {
-        metaInfo = new HashMap<>();
-    }
 }

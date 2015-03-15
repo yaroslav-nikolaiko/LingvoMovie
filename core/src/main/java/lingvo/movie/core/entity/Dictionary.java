@@ -40,18 +40,13 @@ public class Dictionary {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "dictionary_id")
-    List<MediaItem> mediaItems;
+    List<MediaItem> mediaItems = new ArrayList<>();
 
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "dictionary_id")
     @XmlTransient
-    Set<WordCell> wordCells;
-
-    public Dictionary() {
-        mediaItems = new ArrayList<>();
-        wordCells = new HashSet<>();
-    }
+    Set<WordCell> wordCells = new HashSet<>();
 
 /*
 
