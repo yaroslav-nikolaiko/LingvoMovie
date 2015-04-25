@@ -68,6 +68,15 @@ public class UserRepositoryTest extends AbstractRepositoryTest{
     }
 
     @Test
+    public void findByNameAndPassword() throws Exception {
+        user = userRepository.save(user);
+        em.flush();
+        em.clear();
+
+        assertEquals(user, userRepository.findByNameAndPassword(user.getName(), user.getPassword()));
+    }
+
+    @Test
     public void findByNonExistedName() throws Exception {
         user = userRepository.save(user);
         em.flush();
