@@ -15,6 +15,13 @@ services.service('UserService', ['halClient','RestUtilsService', function (halCl
                 return RestUtilsService.resolveResponse(response, 'users', true);
             });
     };
+
+    this.findAll = function() {
+        return halClient.$get('http://server:9080/lingvo-movie/api/users').
+            then(function(response) {
+                return RestUtilsService.resolveResponse(response, 'users');
+            });
+    };
 }]);
 
 
