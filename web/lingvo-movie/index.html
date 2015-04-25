@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="css/app.css">
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/rfc6570/rfc6570.js"></script>
+    <script src="bower_components/angular-hal/angular-hal.js"></script>
     <script src="js/services.js"></script>
     <script src="js/controllers.js"></script>
     <script src="js/directives.js"></script>
@@ -16,7 +18,7 @@
 <body>
     <p>Nothing here {{'yet' + '!'}}</p>
     <div ng-controller="RootController">
-        <input type="text", ng-model="name"/>
+        <input type="text" ng-model="name"/>
         <br/>
 
         <button ng-click="loadUser()">Load User</button>
