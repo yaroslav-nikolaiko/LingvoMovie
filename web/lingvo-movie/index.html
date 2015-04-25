@@ -26,6 +26,14 @@
 
         Name  : {{user.name}}
         Email : {{user.email}}
+        <br/>
+        <ul>
+            <li ng-repeat="dictionary in user.dictionaries">
+                <p>Name : {{dictionary.name}}</p>
+                <p>Learning Language : {{dictionary.learningLanguage}}</p>
+                <p>Native   Language : {{dictionary.nativeLanguage}}</p>
+            </li>
+        </ul>
     </div>
 
 
