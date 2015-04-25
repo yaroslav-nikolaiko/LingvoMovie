@@ -26,6 +26,4 @@ public class Text {
     Language language;
     Long sourceId;
     String ranking;
-    @OneToOne
-    User uploadUser;
 }
