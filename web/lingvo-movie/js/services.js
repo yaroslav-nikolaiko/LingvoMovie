@@ -1,6 +1,7 @@
 'use strict';
 
 /* Services */
+var REST_URL = 'http://localhost:9080/lingvo-movie/api';
 
 var services = angular.module('services', [ 'angular-hal']);
 
@@ -8,7 +9,7 @@ services.service('UserService', ['halClient','RestUtilsService', function (halCl
     this.find = function(query, param) {
         //var user = {name: name, email: "yaroslav@gmail.com"};
 
-        return halClient.$get('http://server:9080/lingvo-movie/api/users/search').
+        return halClient.$get(REST_URL+'/users/search').
             then(function(response) {
                 return response.$get(query,param);
             }).then(function(response) {
@@ -17,7 +18,7 @@ services.service('UserService', ['halClient','RestUtilsService', function (halCl
     };
 
     this.findAll = function() {
-        return halClient.$get('http://server:9080/lingvo-movie/api/users').
+        return halClient.$get(REST_URL+'/users').
             then(function(response) {
                 return RestUtilsService.resolveResponse(response, 'users');
             });
