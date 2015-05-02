@@ -1,4 +1,4 @@
-package lingvo.movie.core.utils;
+package lingvo.movie.core.security;
 
 import java.io.IOException;
 import javax.servlet.Filter;
