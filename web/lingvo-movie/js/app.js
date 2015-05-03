@@ -2,7 +2,7 @@
 
 /* App Module */
 
-var lingvoMovie = angular.module('lingvoMovie', ['ngRoute',
+var lingvoMovie = angular.module('lingvoMovie', ['ngRoute', 'ui.bootstrap',
     'services', 'controllers']);
 
 
