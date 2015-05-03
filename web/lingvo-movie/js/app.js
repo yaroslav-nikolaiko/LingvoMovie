@@ -21,7 +21,7 @@ lingvoMovie.factory('unAuthorizedInterceptor', ['$q', '$window','$location', fun
     return {
         'responseError': function(errorResponse) {
             switch (errorResponse.status) {
-                case 403:
+                case 401:
                     //$window.location = '#login';
                     $location.path('/login');
                     break;
