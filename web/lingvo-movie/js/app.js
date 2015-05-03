@@ -10,7 +10,8 @@ lingvoMovie.config(['$routeProvider',
     function($routeProvider) {
         $routeProvider.
             when('/login', {
-                templateUrl: 'login.html'
+                templateUrl: 'login.html',
+                controller: 'LoginController'
             }).
             otherwise({
                 templateUrl:  'demo.html'
