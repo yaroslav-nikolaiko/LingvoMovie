@@ -6,12 +6,16 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.access.AccessDecisionVoter;
 import org.springframework.security.access.vote.AffirmativeBased;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
+import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -41,7 +45,12 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/**") .hasRole("ADMIN")
                 .accessDecisionManager(new AffirmativeBased(decisionVoters))
                 .and()
-                .formLogin();
+                .formLogin().
+                loginProcessingUrl("/login").permitAll().and().exceptionHandling().authenticationEntryPoint(new Http403ForbiddenEntryPoint());
     }
 
+    @Override
+    public void setAuthenticationConfiguration(AuthenticationConfiguration authenticationConfiguration) {
+        super.setAuthenticationConfiguration(authenticationConfiguration);
+    }
 }

@@ -6,7 +6,8 @@
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="css/app.css">
     <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <!--<script src="bower_components/angular-resource/angular-resource.js"></script>-->
     <script src="bower_components/rfc6570/rfc6570.js"></script>
     <script src="bower_components/angular-hal/angular-hal.js"></script>
     <script src="js/services.js"></script>
@@ -16,29 +17,8 @@
     <script src="js/app.js"></script>
 </head>
 <body>
-    <p>Nothing here {{'yet' + '!'}}</p>
-    <div ng-controller="RootController">
-        <div class="input-group">
-            <span class="input-group-addon" id="basic-addon1">*</span>
-            <input type="text" ng-model="name" ng-keypress="($event.which === 13)?loadUser():0" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
-        </div>
-        <br/>
-
-        <button ng-click="loadUser()" type="button"  class="btn btn-default">Load User</button>
-        <br/>
-
-        Name  : {{user.name}}
-        Email : {{user.email}}
-        <br/>
-        <ul>
-            <li ng-repeat="dictionary in user.dictionaries">
-                <p>Name : {{dictionary.name}}</p>
-                <p>Learning Language : {{dictionary.learningLanguage}}</p>
-                <p>Native   Language : {{dictionary.nativeLanguage}}</p>
-            </li>
-        </ul>
+    <div class="view-container">
+        <div ng-view class="view-frame"></div>
     </div>
-
-
 </body>
 </html>

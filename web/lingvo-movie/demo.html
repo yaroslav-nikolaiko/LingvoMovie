@@ -1,0 +1,22 @@
+<p>Nothing here {{'yet' + '!'}}</p>
+<div ng-controller="RootController">
+    <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">*</span>
+        <input type="text" ng-model="name" ng-keypress="($event.which === 13)?loadUser():0" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+    </div>
+    <br/>
+
+    <button ng-click="loadUser()" type="button"  class="btn btn-default">Load User</button>
+    <br/>
+
+    Name  : {{user.name}}
+    Email : {{user.email}}
+    <br/>
+    <ul>
+        <li ng-repeat="dictionary in user.dictionaries">
+            <p>Name : {{dictionary.name}}</p>
+            <p>Learning Language : {{dictionary.learningLanguage}}</p>
+            <p>Native   Language : {{dictionary.nativeLanguage}}</p>
+        </li>
+    </ul>
+</div>
