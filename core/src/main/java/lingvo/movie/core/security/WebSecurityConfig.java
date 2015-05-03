@@ -54,13 +54,7 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginProcessingUrl("/login").permitAll().
                 and().exceptionHandling().
-                authenticationEntryPoint(new AuthenticationEntryPoint() {
-                    @Override
-                    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-                        HttpServletResponse httpResponse = (HttpServletResponse) response;
-                        httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Access Denied");
-                    }
-                });
+                authenticationEntryPoint((req, res, authExc) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Access Denied"));
     }
 
     @Override
