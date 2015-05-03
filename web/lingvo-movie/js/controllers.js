@@ -24,10 +24,28 @@ controllers.controller('LoginController', function($scope, $http){
                     str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
                 return str.join("&");
             },
-            data: {username: $scope.name, password: $scope.password}
-        }).success(function (response) {
-            console.log(response);
+            data: {username: $scope.name, password: $scope.password},
+        }).success(function (data, status, headers, config) {
+            console.log(data);
+        }).error(function(data, status, headers, config) {
+            console.log(data);
         });
+
     };
+
+/*    $scope.login = function() {
+        var data = new FormData();
+        data.append( 'username',  $scope.name);
+        data.append( 'password',  $scope.password);
+        $http.post('http://localhost:9080/login', {username: $scope.name, password: $scope.password}, {
+            headers : {
+                "content-type" : "application/x-www-form-urlencoded"
+            }
+        }).success(function(data) {
+            console.log(data);
+        }).error(function(data) {
+            console.log(data);
+        })
+    };*/
 
 });

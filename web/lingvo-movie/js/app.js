@@ -38,4 +38,8 @@ lingvoMovie.config(['$httpProvider', function($httpProvider) {
 }]);
 
 
+lingvoMovie.config(['$httpProvider', function($httpProvider) {
+        $httpProvider.defaults.withCredentials = true;
+    }])
+
 

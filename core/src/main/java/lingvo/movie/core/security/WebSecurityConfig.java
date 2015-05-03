@@ -45,8 +45,8 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/**") .hasRole("ADMIN")
                 .accessDecisionManager(new AffirmativeBased(decisionVoters))
                 .and()
-                .formLogin().
-                loginProcessingUrl("/login").permitAll().and().exceptionHandling().authenticationEntryPoint(new Http403ForbiddenEntryPoint());
+                .formLogin()
+                .loginProcessingUrl("/login").permitAll().and().exceptionHandling().authenticationEntryPoint(new Http403ForbiddenEntryPoint());
     }
 
     @Override
