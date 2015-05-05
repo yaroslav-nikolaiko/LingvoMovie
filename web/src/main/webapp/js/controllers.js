@@ -12,7 +12,17 @@ controllers.controller('RootController', function($scope, UserService) {
     };
 });
 
+//--------------------------------- Login Controller -----------------------------------
+
 controllers.controller('LoginController', function($scope, $http, $location, $rootScope){
+    $scope.init = function () {
+        var pathname = window.location.href;
+        if(pathname.indexOf("signup=true") > -1)  {
+            $('#loginbox').hide();
+            $('#signupbox').show();
+        }
+    };
+
     $scope.login = function() {
         $http({
             method: 'POST',
@@ -34,26 +44,6 @@ controllers.controller('LoginController', function($scope, $http, $location, $ro
         });
 
     };
-
-/*    $scope.signUp = function() {
-        $http({
-            method: 'POST',
-            url: 'http://server:9080/lingvo-movie/api/users',
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            transformRequest: function(obj) {
-                var str = [];
-                for(var p in obj)
-                    str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                return str.join("&");
-            },
-            data: {name: $scope.name, password: $scope.password, email : $scope.email}
-        }).success(function (data, status, headers, config) {
-            $location.path('/home');
-        }).error(function(data, status, headers, config) {
-            console.log(data);
-        });
-
-    };*/
 
     $scope.signUp = function() {
         $http.post('api/users',
