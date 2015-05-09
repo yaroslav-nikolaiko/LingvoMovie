@@ -24,8 +24,24 @@ services.service('UserService', ['halClient','RestUtilsService', function (halCl
     };
 }]);
 
+services.service('LookupService', ['$http', 'halClient','RestUtilsService', function ($http, halClient, RestUtilsService) {
+    this.lookup = function(type) {
+        return RestUtilsService.entryPoint().then(function (entry) {
+            return $http.get(entry.$href('lookup'), {
+                params: {name: type}
+            })
+        });
+    };
+}]);
 
-services.service('RestUtilsService', [function () {
+
+services.service('RestUtilsService', ['halClient', function (halClient) {
+    this.entryPoint_cache;
+    this.entryPoint = function() {
+        if(this.entryPoint_cache) return this.entryPoint_cache;
+        return this.entryPoint_cache = halClient.$get('api');
+    };
+
     this.resolveResponse = function(response, entityName, single) {
         if (response.$has(entityName)) {
             return response.$get(entityName).then(function (entity) {

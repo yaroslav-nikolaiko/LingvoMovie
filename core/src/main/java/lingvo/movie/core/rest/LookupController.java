@@ -30,8 +30,8 @@ import static java.util.stream.Collectors.toList;
 @RequestMapping("lookup")
 @ExposesResourceFor(LookupItem.class)
 public class LookupController implements ResourceProcessor<RepositoryLinksResource> {
-    @RequestMapping(value = "{lookupName}", method = RequestMethod.GET)
-    public List<LookupItem> getItems(@PathVariable @NotBlank String lookupName) {
+    @RequestMapping(method = RequestMethod.GET)
+    public List<LookupItem> getItems(@RequestParam("name") @NotBlank String lookupName) {
         switch (lookupName.toUpperCase()) {
             case "CATEGORY" : return getItems(Category.class);
             case "LANGUAGE" : return getItems(Language.class);
@@ -41,28 +41,11 @@ public class LookupController implements ResourceProcessor<RepositoryLinksResour
         return Collections.emptyList();
     }
 
-/*    @RequestMapping(method = RequestMethod.GET)
-    public HttpEntity<Resources<LookupItem>> getItems(@RequestParam("name") @NotBlank String lookupName) {
-        switch (lookupName.toUpperCase()) {
-            case "CATEGORY" : return getItems(Category.class);
-            case "LANGUAGE" : return getItems(Language.class);
-            case "LEVEL" : return getItems(Level.class);
-            case "TEXTTYPE" : return getItems(TextType.class);
-        }
-        return new HttpEntity<>(new Resources<>(Collections.emptyList()));
-    }*/
-
     List<LookupItem> getItems(Class clazz) {
         return Arrays.asList(clazz.getEnumConstants()).stream()
                 .map(item -> LookupItem.clone((LookupItem)item))
                 .collect(toList());
     }
-
-/*    HttpEntity<Resources<LookupItem>> getItems(Class clazz) {
-        return new HttpEntity<>( new Resources<>(Arrays.asList(clazz.getEnumConstants()).stream()
-                .map(item -> LookupItem.clone((LookupItem)item))
-                .collect(toList())));
-    }*/
 
     @Override
     public RepositoryLinksResource process(RepositoryLinksResource resource) {
