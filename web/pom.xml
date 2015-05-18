@@ -30,6 +30,26 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+
+            <plugin>
+                <groupId>pl.allegro</groupId>
+                <artifactId>grunt-maven-plugin</artifactId>
+                <version>1.4.1</version>
+                <configuration>
+                    <jsSourceDirectory>src/main/webapp</jsSourceDirectory>
+                    <gruntBuildDirectory>target</gruntBuildDirectory>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>create-resources</goal>
+                            <goal>npm</goal>
+                            <!--<goal>bower</goal>-->
+                            <!--<goal>grunt</goal>-->
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
