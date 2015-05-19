@@ -2,7 +2,7 @@
 
 /* Controllers */
 
-var controllers = angular.module('controllers', []);
+var controllers = angular.module('controllers', ['ui.bootstrap']);
 
 controllers.controller('RootController', function($scope, UserService, LookupService) {
     $scope.loadUser = function() {
@@ -16,6 +16,23 @@ controllers.controller('RootController', function($scope, UserService, LookupSer
             console.log(response.data);
         });
     };
+});
+
+controllers.controller('IndexPageController', function($scope, $modal) {
+    $scope.dictionaryDialog = function() {
+        //$dialogs.create('dialogs/dictionary.html');
+        $modal.open({
+            templateUrl : 'dialogs/dictionary.html'
+        })
+    };
+});
+
+controllers.controller('SampleModalController', function($scope, close) {
+
+    $scope.dismissModal = function(result) {
+        close(result, 200); // close, but give 200ms for bootstrap to animate
+    };
+
 });
 
 //--------------------------------- Login Controller -----------------------------------

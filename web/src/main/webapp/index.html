@@ -8,7 +8,7 @@
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <!--<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>-->
-    <script src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
     <!--<script src="bower_components/angular-resource/angular-resource.js"></script>-->
     <script src="bower_components/rfc6570/rfc6570.js"></script>
@@ -21,7 +21,7 @@
 
 </head>
 <body>
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-inverse" ng-controller="IndexPageController">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -38,8 +38,8 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-                <li><a href="#">Link</a></li>
-                <li class="dropdown" dropdown>
+                <li><a href="#" ng-click="dictionaryDialog()">Dictionary</a></li>
+                <li class="dropdown">
                     <a href="#" class="dropdown-toggle" dropdown-toggle role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="#">Action</a></li>
