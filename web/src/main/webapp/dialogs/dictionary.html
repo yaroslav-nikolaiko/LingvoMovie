@@ -1,6 +1,13 @@
-<div class="modal-header">
-    <h1>This is the title</h1>
-</div>'
-<div class="modal-body">
-    Hi, I'm a modal!
+<div ng-modal="showModal" close="cancel()">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4>Modal Dialog</h4>
+    </div>
+    <div class="modal-body">
+        <p>Example paragraph with some text.</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-success" ng-click="ok()">Okay</button>
+        <button class="btn" ng-click="cancel()">Cancel</button>
+    </div>
 </div>
