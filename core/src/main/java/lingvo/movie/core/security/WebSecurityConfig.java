@@ -1,5 +1,6 @@
 package lingvo.movie.core.security;
 
+import lingvo.movie.core.security.utils.UserPrincipalWithId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Configuration;
@@ -47,7 +48,9 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .loginProcessingUrl("/login").permitAll()
-                .successHandler((request, response, authentication) -> response.setStatus(HttpServletResponse.SC_OK))
+                .successHandler((request, response, authentication) -> {
+                    response.setStatus(HttpServletResponse.SC_OK);
+                    response.getOutputStream().print(((UserPrincipalWithId) authentication.getPrincipal()).getId());})
                 .and().exceptionHandling()
                 .authenticationEntryPoint((req, res, authExc) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Access Denied"));
     }

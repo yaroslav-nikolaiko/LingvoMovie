@@ -22,22 +22,47 @@ controllers.controller('IndexPageController', function($scope, $modal) {
     $scope.dictionaryDialog = function() {
         //$dialogs.create('dialogs/dictionary.html');
         $modal.open({
-            templateUrl : 'dialogs/dictionary.html'
-        })
+            templateUrl: 'dialogs/dictionary.html',
+            controller: 'SampleModalController'
+        });
     };
 });
 
-controllers.controller('SampleModalController', function($scope, close) {
-
-    $scope.dismissModal = function(result) {
-        close(result, 200); // close, but give 200ms for bootstrap to animate
+controllers.controller('SampleModalController', function($scope, LookupService, DictionaryService) {
+    this.init = function () {
+        LookupService.lookup('language').then(function(response) {
+            $scope.languages = response.data;
+        });
+        LookupService.lookup('level').then(function(response) {
+            $scope.levels = response.data;
+        });
     };
 
+
+    $scope.createDictionary = function() {
+        DictionaryService.add($scope.dictionary);
+    };
+
+    $scope.lookup = function(type) {
+        LookupService.lookup(type).then(function(response) {
+            console.log(response.data);
+        });
+    };
+
+    $scope.languages = function() {
+        return LookupService.lookup('language').then(function(response) {
+            console.log(response.data);
+            return response.data;
+        });
+    };
+
+
+    this.init();
 });
 
 //--------------------------------- Login Controller -----------------------------------
 
-controllers.controller('LoginController', function($scope, $http, $location, $rootScope){
+controllers.controller('LoginController', function($scope, $http, $location, $rootScope, UserService){
     $scope.init = function () {
         var pathname = window.location.href;
         if(pathname.indexOf("signup=true") > -1)  {
@@ -58,8 +83,9 @@ controllers.controller('LoginController', function($scope, $http, $location, $ro
                 return str.join("&");
             },
             data: {username: $scope.name, password: $scope.password}
-        }).success(function (data, status, headers, config) {
+        }).success(function (id, status, headers, config) {
             $rootScope.loggedIn = true;
+            UserService.load(id);
             $location.path('/home');
         }).error(function(data, status, headers, config) {
             $rootScope.loggedIn = false;

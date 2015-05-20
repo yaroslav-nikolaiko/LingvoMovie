@@ -5,6 +5,9 @@
 var services = angular.module('services', [ 'angular-hal']);
 
 services.service('UserService', ['halClient','RestUtilsService', function (halClient, RestUtilsService) {
+    this.user = null;
+
+
     this.find = function(query, param) {
         //var user = {name: name, email: "yaroslav@gmail.com"};
 
@@ -14,6 +17,34 @@ services.service('UserService', ['halClient','RestUtilsService', function (halCl
             }).then(function(response) {
                 return RestUtilsService.resolveResponse(response, 'users', true);
             });
+    };
+
+    this.load = function(id) {
+        var self = this;
+        return RestUtilsService.entryPoint().then(function (entry) {
+            return halClient.$get(entry.$href('users') + "/" + id).then(function(user) {
+                return self.user = user;
+            });
+        });
+    };
+
+    this.findAll = function() {
+        return halClient.$get('api/users').
+            then(function(response) {
+                return RestUtilsService.resolveResponse(response, 'users');
+            });
+    };
+}]);
+
+services.service('DictionaryService', ['halClient','UserService', '$rootScope', function (halClient, UserService, $rootScope) {
+    this.add = function(dictionary) {
+        var user = UserService.user;
+        if(! user) return; //TODO : throw error 'You are not log in.'
+        user.dictionaries.push(dictionary);
+        user.$put('self', {}, user);
+/*        halClient.$post(user.$href('self') + '/dictionaries/', {}, dictionary).then(function(response) {
+            console.log(response);
+        });*/
     };
 
     this.findAll = function() {

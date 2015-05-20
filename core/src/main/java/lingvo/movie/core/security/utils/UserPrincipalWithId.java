@@ -9,7 +9,7 @@ import java.util.Collection;
 /**
  * Created by yaroslav on 02.05.15.
  */
-class UserPrincipalWithId extends User {
+public class UserPrincipalWithId extends User {
     final Long id;
 
     public UserPrincipalWithId(@NotNull Long id, String username, String password, Collection<? extends GrantedAuthority> authorities) {
