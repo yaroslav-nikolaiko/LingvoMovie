@@ -40,7 +40,8 @@ services.service('DictionaryService', ['halClient','UserService', '$rootScope', 
     this.add = function(dictionary) {
         var user = UserService.user;
         if(! user) return; //TODO : throw error 'You are not log in.'
-        user.dictionaries.push(dictionary);
+        //user.dictionaries.push(dictionary);
+        user.email = "rachmanino@bigmi.net.updated";
         user.$put('self', {}, user);
 /*        halClient.$post(user.$href('self') + '/dictionaries/', {}, dictionary).then(function(response) {
             console.log(response);
