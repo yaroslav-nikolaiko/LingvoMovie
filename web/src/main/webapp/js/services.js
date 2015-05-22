@@ -7,7 +7,6 @@ var services = angular.module('services', [ 'angular-hal']);
 services.service('UserService', ['halClient','RestUtilsService', function (halClient, RestUtilsService) {
     this.user = null;
 
-
     this.find = function(query, param) {
         //var user = {name: name, email: "yaroslav@gmail.com"};
 
@@ -21,6 +20,7 @@ services.service('UserService', ['halClient','RestUtilsService', function (halCl
 
     this.load = function(id) {
         var self = this;
+        id = id ? id : this.get().id;
         return RestUtilsService.entryPoint().then(function (entry) {
             return halClient.$get(entry.$href('users') + "/" + id).then(function(user) {
                 return self.user = user;
@@ -37,16 +37,29 @@ services.service('UserService', ['halClient','RestUtilsService', function (halCl
          });*/
     };
 
-    this.findAll = function() {
-        return halClient.$get('api/users').
-            then(function(response) {
-                return RestUtilsService.resolveResponse(response, 'users');
-            });
+    this.get = function() {
+        if ( ! this.user) return null; //TODO : throw error 'You are not log in.'
+        return this.user;
     };
 }]);
 
 services.service('DictionaryService', ['halClient','UserService', '$rootScope', function (halClient, UserService, $rootScope) {
-    this.add = function(dictionary) {
+    this.get = function(){
+        return UserService.get().dictionaries;
+    };
+
+    this.add = function (dictionary) {
+        var dictionaries = this.get();
+        dictionaries.push(dictionary);
+        UserService.get().$patch('self', {}, {"dictionaries": dictionaries}).then(function (){
+            UserService.load();
+        });
+
+    };
+
+
+
+    this.update = function(dictionary) {
         //var user = UserService.user;
         if(! UserService.user) return; //TODO : throw error 'You are not log in.'
         //user.dictionaries.push(dictionary);
@@ -55,7 +68,7 @@ services.service('DictionaryService', ['halClient','UserService', '$rootScope', 
         user.name = UserService.user.name;
         user.email = UserService.user.email;
         user.password = UserService.user.password;
-        user.email = 'admin@gmail2.com';
+        user.email = 'admin@gmail.com';
         user.dictionaries = UserService.user.dictionaries;
         //user.dictionaries[0].name = "updated";
 

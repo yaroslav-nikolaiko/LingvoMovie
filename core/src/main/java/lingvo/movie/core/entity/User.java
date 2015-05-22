@@ -47,13 +47,10 @@ public class User {
     }
 
     public void setDictionaries(List<Dictionary> dictionaries) {
-        System.out.println(dictionaries);
-/*        if (this.dictionaries == null) {
-            this.dictionaries = dictionaries;
-        } else {
+        if (dictionaries != null) {
             this.dictionaries.clear();
             this.dictionaries.addAll(dictionaries);
-        }*/
+        }
     }
 
     public void removeDictionary(Dictionary dictionary) {
