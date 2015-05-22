@@ -35,7 +35,7 @@ public class User {
     String email;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     List<Dictionary> dictionaries;
 
     public User() {
@@ -44,6 +44,16 @@ public class User {
 
     public void addDictionary(Dictionary dictionary){
         dictionaries.add(dictionary);
+    }
+
+    public void setDictionaries(List<Dictionary> dictionaries) {
+        System.out.println(dictionaries);
+/*        if (this.dictionaries == null) {
+            this.dictionaries = dictionaries;
+        } else {
+            this.dictionaries.clear();
+            this.dictionaries.addAll(dictionaries);
+        }*/
     }
 
     public void removeDictionary(Dictionary dictionary) {

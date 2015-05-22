@@ -28,7 +28,7 @@ controllers.controller('IndexPageController', function($scope, $modal) {
     };
 });
 
-controllers.controller('SampleModalController', function($scope, LookupService, DictionaryService) {
+controllers.controller('SampleModalController', function($scope, LookupService, DictionaryService, UserService) {
     this.init = function () {
         LookupService.lookup('language').then(function(response) {
             $scope.languages = response.data;
