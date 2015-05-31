@@ -10,10 +10,7 @@
                 <accordion-heading >
                     {{dictionary.name}}
                     <div class="pull-right" ng-show="status.open">
-                        <button class="btn btn-success btn-xs" ng-click="$event.stopPropagation();" title="Update">
-                            <span class="glyphicon glyphicon-ok"/>
-                        </button>
-                        <button class="btn btn-danger btn-xs" title="Remove" ng-click="remove(dictionary)">
+                        <button class="btn btn-danger btn-xs" title="Remove" ng-click="$event.stopPropagation(); remove($index);">
                             <span class="glyphicon glyphicon-remove"/>
                         </button>
                     </div>
@@ -26,8 +23,9 @@
     </div>
 
     <div class="modal-footer">
+        <button class="btn btn-info" ng-click="update(); exit();" title="Update">Ok</button>
         <button class="btn btn-success" onClick="$('#manage-dictionary').hide(); $('#create-dictionary').show()">Create New</button>
-        <button class="btn" ng-click="cancel()">Cancel</button>
+        <button class="btn" ng-click="exit()">Cancel</button>
     </div>
 </div>
 

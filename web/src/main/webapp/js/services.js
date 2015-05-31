@@ -57,7 +57,13 @@ services.service('DictionaryService', ['halClient','UserService', '$rootScope', 
         });
     };
 
-    this.remove = function(dictionary) {
+    this.update = function(dictionaries) {
+        UserService.get().$patch('self', {}, {"dictionaries": dictionaries}).then(function (){
+            UserService.load();
+        });
+    };
+
+/*    this.remove = function(dictionary) {
         var dictionaries = this.get();
         for(var i=0; i<dictionaries.length; i++)
             if(dictionaries[i].id===dictionary.id)
@@ -69,51 +75,7 @@ services.service('DictionaryService', ['halClient','UserService', '$rootScope', 
         UserService.get().$patch('self', {}, {"dictionaries": dictionaries}).then(function (){
             UserService.load();
         });
-    };
-
-
-
-    this.update = function(dictionary) {
-        //var user = UserService.user;
-        if(! UserService.user) return; //TODO : throw error 'You are not log in.'
-        //user.dictionaries.push(dictionary);
-        //user.email = "rachmanino@bigmi.net.updated";
-        var user = {};
-        user.name = UserService.user.name;
-        user.email = UserService.user.email;
-        user.password = UserService.user.password;
-        user.email = 'admin@gmail.com';
-        user.dictionaries = UserService.user.dictionaries;
-        //user.dictionaries[0].name = "updated";
-
-        UserService.user.$patch('self', {}, user);
-/*        halClient.$post(user.$href('self') + '/dictionaries/', {}, dictionary).then(function(response) {
-            console.log(response);
-        });*/
-    };
-
-    this.updateUser = function(dictionary) {
-        //var user = UserService.user;
-        if(! UserService.user) return; //TODO : throw error 'You are not log in.'
-        //user.dictionaries.push(dictionary);
-        //user.email = "rachmanino@bigmi.net.updated";
-        var user = {};
-        user.name = UserService.user.name;
-        user.email = UserService.user.email;
-        user.password = UserService.user.password;
-        user.email = 'admin@gmail.com';
-        UserService.user.$put('self', {}, user);
-        /*        halClient.$post(user.$href('self') + '/dictionaries/', {}, dictionary).then(function(response) {
-         console.log(response);
-         });*/
-    };
-
-    this.findAll = function() {
-        return halClient.$get('api/users').
-            then(function(response) {
-                return RestUtilsService.resolveResponse(response, 'users');
-            });
-    };
+    };*/
 }]);
 
 services.service('LookupService', ['$http', 'halClient','RestUtilsService', function ($http, halClient, RestUtilsService) {

@@ -23,12 +23,13 @@ controllers.controller('IndexPageController', function($scope, $modal) {
         //$dialogs.create('dialogs/dictionary.html');
         $modal.open({
             templateUrl: 'dialogs/dictionary.html',
-            controller: 'SampleModalController'
+            controller: 'DictionaryModalController'
         });
     };
 });
 
-controllers.controller('SampleModalController', function($scope, LookupService, DictionaryService, UserService) {
+controllers.controller('DictionaryModalController', function($scope,$modalInstance, LookupService, DictionaryService, UserService) {
+    var self = this;
     this.init = function () {
         LookupService.lookup('language').then(function(response) {
             $scope.languages = response.data;
@@ -36,17 +37,31 @@ controllers.controller('SampleModalController', function($scope, LookupService, 
         LookupService.lookup('level').then(function(response) {
             $scope.levels = response.data;
         });
+        this.load();
     };
 
-    $scope.dictionaries = DictionaryService.get();
+    this.load = function(){
+        $scope.dictionaries = angular.copy(DictionaryService.get());
+    };
 
-    $scope.remove = function (dictionary) {
-        DictionaryService.remove(dictionary);
+    $scope.remove = function (index) {
+        if(confirm("Are you sure you want ro DELETE this dictionary")){
+            $scope.dictionaries.splice(index, 1);
+        }
+    };
+
+    $scope.update = function () {
+        DictionaryService.update($scope.dictionaries);
+    };
+
+    $scope.exit = function (){
+        $modalInstance.close();
     };
 
     $scope.createDictionary = function() {
         DictionaryService.add($scope.dictionary, function(){
             $('#manage-dictionary').show(); $('#create-dictionary').hide();
+            self.load();
         });
     };
 
