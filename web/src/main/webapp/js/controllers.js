@@ -4,7 +4,7 @@
 
 var controllers = angular.module('controllers', ['ui.bootstrap']);
 
-controllers.controller('RootController', function($scope, UserService, LookupService) {
+controllers.controller('RootController', function($scope, UserService,  LookupService) {
     $scope.loadUser = function() {
         UserService.find('findByName', {name : $scope.name}).then(function(user) {
             $scope.user = user;
@@ -18,7 +18,7 @@ controllers.controller('RootController', function($scope, UserService, LookupSer
     };
 });
 
-controllers.controller('IndexPageController', function($scope, $modal) {
+controllers.controller('IndexPageController', function($scope,$rootScope, $modal, DictionaryService, UserService) {
     $scope.dictionaryDialog = function() {
         //$dialogs.create('dialogs/dictionary.html');
         $modal.open({
@@ -26,6 +26,12 @@ controllers.controller('IndexPageController', function($scope, $modal) {
             controller: 'DictionaryModalController'
         });
     };
+
+    $scope.currentDictionaryName = function(){
+        var dictionary = DictionaryService.getCurrent();
+        if( ! dictionary) return "Create Your Dictionaries";
+        return dictionary.name;
+    }
 });
 
 controllers.controller('DictionaryModalController', function($scope,$modalInstance, LookupService, DictionaryService, UserService) {

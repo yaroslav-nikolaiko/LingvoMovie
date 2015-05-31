@@ -38,7 +38,7 @@ services.service('UserService', ['halClient','RestUtilsService', function (halCl
     };
 
     this.get = function() {
-        if ( ! this.user) return null; //TODO : throw error 'You are not log in.'
+        if ( ! this.user) return null; //TODO : ????? throw error 'You are not log in.'
         return this.user;
     };
 }]);
@@ -47,6 +47,7 @@ services.service('DictionaryService', ['halClient','UserService', '$rootScope', 
     this.currentDictionary = null;
 
     this.get = function(){
+        if(UserService.get()==null) return [];
         return UserService.get().dictionaries;
     };
 
