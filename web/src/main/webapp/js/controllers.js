@@ -40,6 +40,10 @@ controllers.controller('SampleModalController', function($scope, LookupService, 
 
     $scope.dictionaries = DictionaryService.get();
 
+    $scope.remove = function (dictionary) {
+        DictionaryService.remove(dictionary);
+    };
+
     $scope.createDictionary = function() {
         DictionaryService.add($scope.dictionary, function(){
             $('#manage-dictionary').show(); $('#create-dictionary').hide();

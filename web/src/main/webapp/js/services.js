@@ -55,7 +55,20 @@ services.service('DictionaryService', ['halClient','UserService', '$rootScope', 
             UserService.load();
             if(onSuccess) onSuccess();
         });
+    };
 
+    this.remove = function(dictionary) {
+        var dictionaries = this.get();
+        for(var i=0; i<dictionaries.length; i++)
+            if(dictionaries[i].id===dictionary.id)
+                var index = i;
+
+        if( ! index) return;
+        dictionaries.splice(index, 1);
+
+        UserService.get().$patch('self', {}, {"dictionaries": dictionaries}).then(function (){
+            UserService.load();
+        });
     };
 
 

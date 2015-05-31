@@ -6,8 +6,19 @@
 
     <div class="modal-body">
         <accordion close-others="true">
-            <accordion-group heading="{{dictionary.name}}"
-                             ng-repeat="dictionary in dictionaries">
+            <accordion-group ng-repeat="dictionary in dictionaries" is-open="status.open">
+                <accordion-heading >
+                    {{dictionary.name}}
+                    <div class="pull-right" ng-show="status.open">
+                        <button class="btn btn-success btn-xs" ng-click="$event.stopPropagation();" title="Update">
+                            <span class="glyphicon glyphicon-ok"/>
+                        </button>
+                        <button class="btn btn-danger btn-xs" title="Remove" ng-click="remove(dictionary)">
+                            <span class="glyphicon glyphicon-remove"/>
+                        </button>
+                    </div>
+                    <!--<i class="pull-right glyphicon" ng-hide="status.open"  ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>-->
+                </accordion-heading>
                 <div ng-include="'dialogs/dictionary-sample.html'"></div>
             </accordion-group>
         </accordion>
