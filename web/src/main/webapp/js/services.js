@@ -48,11 +48,12 @@ services.service('DictionaryService', ['halClient','UserService', '$rootScope', 
         return UserService.get().dictionaries;
     };
 
-    this.add = function (dictionary) {
+    this.add = function (dictionary, onSuccess) {
         var dictionaries = this.get();
         dictionaries.push(dictionary);
         UserService.get().$patch('self', {}, {"dictionaries": dictionaries}).then(function (){
             UserService.load();
+            if(onSuccess) onSuccess();
         });
 
     };

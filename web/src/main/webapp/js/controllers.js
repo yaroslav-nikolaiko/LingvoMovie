@@ -38,9 +38,12 @@ controllers.controller('SampleModalController', function($scope, LookupService, 
         });
     };
 
+    $scope.dictionaries = DictionaryService.get();
 
     $scope.createDictionary = function() {
-        DictionaryService.add($scope.dictionary);
+        DictionaryService.add($scope.dictionary, function(){
+            $('#manage-dictionary').show(); $('#create-dictionary').hide();
+        });
     };
 
     $scope.lookup = function(type) {
