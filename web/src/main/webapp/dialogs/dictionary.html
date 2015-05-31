@@ -8,6 +8,7 @@
         <accordion close-others="true">
             <accordion-group ng-repeat="dictionary in dictionaries" is-open="status.open">
                 <accordion-heading >
+                    <input type="radio" ng-value="dictionary.id" ng-model="$parent.$parent.$parent.$parent.selectedID"  ng-click="$event.stopPropagation();">
                     {{dictionary.name}}
                     <div class="pull-right" ng-show="status.open">
                         <button class="btn btn-danger btn-xs" title="Remove" ng-click="$event.stopPropagation(); remove($index);">

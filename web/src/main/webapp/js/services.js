@@ -44,8 +44,22 @@ services.service('UserService', ['halClient','RestUtilsService', function (halCl
 }]);
 
 services.service('DictionaryService', ['halClient','UserService', '$rootScope', function (halClient, UserService, $rootScope) {
+    this.currentDictionary = null;
+
     this.get = function(){
         return UserService.get().dictionaries;
+    };
+
+    this.getCurrent = function () {
+        if(this.currentDictionary) return this.currentDictionary;
+        if(this.get().length>0) return this.get()[0];
+    };
+
+    this.setCurrent = function (id) {
+        var dict = this.get();
+        for(var i = 0; i<dict.length; i++){
+            if(id===dict[i].id) this.currentDictionary=dict[i];
+        }
     };
 
     this.add = function (dictionary, onSuccess) {

@@ -42,21 +42,24 @@ controllers.controller('DictionaryModalController', function($scope,$modalInstan
 
     this.load = function(){
         $scope.dictionaries = angular.copy(DictionaryService.get());
+        $scope.selectedID = DictionaryService.getCurrent().id;
     };
 
     $scope.remove = function (index) {
-        if(confirm("Are you sure you want ro DELETE this dictionary")){
+        if(confirm("Are you sure you want to DELETE this dictionary")){
             $scope.dictionaries.splice(index, 1);
         }
     };
 
     $scope.update = function () {
         DictionaryService.update($scope.dictionaries);
+        DictionaryService.setCurrent($scope.selectedID)
     };
 
     $scope.exit = function (){
         $modalInstance.close();
     };
+
 
     $scope.createDictionary = function() {
         DictionaryService.add($scope.dictionary, function(){
