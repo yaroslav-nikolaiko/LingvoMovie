@@ -1,7 +1,7 @@
 package lingvo.movie.core.entity;
 
-import lingvo.movie.core.entity.utils.Language;
-import lingvo.movie.core.entity.utils.Level;
+import lingvo.movie.core.entity.lookup.Language;
+import lingvo.movie.core.entity.lookup.Level;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -18,7 +18,7 @@ import java.util.Set;
  * Created by yaroslav on 01.03.15.
  */
 @Entity
-@Table(name = "DICTIONARY")
+@Table(name = "DICTIONARY", uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "name"}))
 @Data @ToString(of = {"name"}) @EqualsAndHashCode(of = {"name", "learningLanguage", "nativeLanguage", "level"})
 public class Dictionary {
     @Id @GeneratedValue

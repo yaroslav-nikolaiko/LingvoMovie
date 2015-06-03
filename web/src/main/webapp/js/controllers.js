@@ -57,12 +57,13 @@ controllers.controller('DictionaryModalController', function($scope,$modalInstan
     $scope.remove = function (index) {
         if(confirm("Are you sure you want to DELETE this dictionary")){
             $scope.dictionaries.splice(index, 1);
+            DictionaryService.update($scope.dictionaries);
         }
     };
 
     $scope.update = function () {
         DictionaryService.update($scope.dictionaries);
-        DictionaryService.setCurrent($scope.selectedID)
+        DictionaryService.setCurrent($scope.selectedID);
     };
 
     $scope.exit = function (){

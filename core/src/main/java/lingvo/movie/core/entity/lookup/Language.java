@@ -1,4 +1,4 @@
-package lingvo.movie.core.entity.utils;
+package lingvo.movie.core.entity.lookup;
 
 import lingvo.movie.core.entity.lookup.LookupItem;
 

@@ -1,17 +1,17 @@
-package lingvo.movie.core.entity.utils;
+package lingvo.movie.core.entity.lookup;
 
 import lingvo.movie.core.entity.lookup.LookupItem;
 
 /**
- * Created by yaroslav on 6/1/14.
+ * Created by yaroslav on 01.03.15.
  */
-public enum Category implements LookupItem {
-    KNOWN("Known"),
-    LEARNED("Learned"),
-    NEW_WORD("New Word");
+public enum TextType implements LookupItem {
+    SUBTITLES("Subtitles"),
+    LYRICS("Lyrics"),
+    TEXT("Text");
 
     String description;
-    Category(String description) {
+    TextType(String description) {
         this.description = description;
     }
 

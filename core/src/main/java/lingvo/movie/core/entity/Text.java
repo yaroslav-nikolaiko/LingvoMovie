@@ -1,7 +1,7 @@
 package lingvo.movie.core.entity;
 
-import lingvo.movie.core.entity.utils.Language;
-import lingvo.movie.core.entity.utils.TextType;
+import lingvo.movie.core.entity.lookup.Language;
+import lingvo.movie.core.entity.lookup.TextType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;

@@ -1,24 +1,21 @@
 package lingvo.movie.core.rest;
 
 import lingvo.movie.core.entity.lookup.LookupItem;
-import lingvo.movie.core.entity.utils.Category;
-import lingvo.movie.core.entity.utils.Language;
-import lingvo.movie.core.entity.utils.Level;
-import lingvo.movie.core.entity.utils.TextType;
+import lingvo.movie.core.entity.lookup.Category;
+import lingvo.movie.core.entity.lookup.Language;
+import lingvo.movie.core.entity.lookup.Level;
+import lingvo.movie.core.entity.lookup.TextType;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.rest.webmvc.RepositoryLinksResource;
 import org.springframework.hateoas.ExposesResourceFor;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.ResourceProcessor;
-import org.springframework.hateoas.Resources;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
-import org.springframework.http.HttpEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Function;
 
 import static java.util.stream.Collectors.toList;
 

@@ -1,6 +1,6 @@
 package lingvo.movie.core.entity;
 
-import lingvo.movie.core.entity.utils.Category;
+import lingvo.movie.core.entity.lookup.Category;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;

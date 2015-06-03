@@ -1,20 +1,17 @@
-package lingvo.movie.core.entity.utils;
+package lingvo.movie.core.entity.lookup;
 
 import lingvo.movie.core.entity.lookup.LookupItem;
 
 /**
  * Created by yaroslav on 6/1/14.
  */
-public enum Level implements LookupItem {
-    BEGINNER("Beginner"),
-    ELEMENTARY("Elementary"),
-    INTERMEDIATE("Intermediate"),
-    UPPER_INTERMEDIATE("Upper Intermediate"),
-    ADVANCED("Advanced"),
-    FLUENT("Fluent");
+public enum Category implements LookupItem {
+    KNOWN("Known"),
+    LEARNED("Learned"),
+    NEW_WORD("New Word");
 
     String description;
-    Level(String description) {
+    Category(String description) {
         this.description = description;
     }
 
