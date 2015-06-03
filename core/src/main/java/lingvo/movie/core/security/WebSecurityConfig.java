@@ -15,6 +15,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -52,7 +53,8 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     response.setStatus(HttpServletResponse.SC_OK);
                     response.getOutputStream().print(((UserPrincipalWithId) authentication.getPrincipal()).getId());})
                 .and()
-                .rememberMe().key("lingvo-movie")
+                .rememberMe().key("lingvo-movie").tokenValiditySeconds(300)
+                //.rememberMe().rememberMeServices(new TokenBasedRememberMeServices("lingvo-movie", dataBaseUserDetailsService))
                 .and()
                 .exceptionHandling()
                 .authenticationEntryPoint((req, res, authExc) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Access Denied"));

@@ -113,7 +113,7 @@ controllers.controller('LoginController', function($scope, $http, $location, $ro
                     str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
                 return str.join("&");
             },
-            data: {username: $scope.name, password: $scope.password}
+            data: {username: $scope.name, password: $scope.password, _spring_security_remember_me : $scope.remember_me}
         }).success(function (id, status, headers, config) {
             $rootScope.loggedIn = true;
             UserService.load(id);
