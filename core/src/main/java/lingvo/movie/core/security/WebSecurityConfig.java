@@ -44,6 +44,8 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/**/users").permitAll()
+                .antMatchers("/").permitAll()
+                .antMatchers("/public/**").permitAll()
                 .antMatchers("/**").hasRole("ADMIN")
                 .accessDecisionManager(new AffirmativeBased(decisionVoters))
                 .and()
@@ -53,7 +55,7 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     response.setStatus(HttpServletResponse.SC_OK);
                     response.getOutputStream().print(((UserPrincipalWithId) authentication.getPrincipal()).getId());})
                 .and()
-                .rememberMe().key("lingvo-movie").tokenValiditySeconds(300)
+                .rememberMe().key("lingvo-movie").tokenValiditySeconds(3600*24)
                 //.rememberMe().rememberMeServices(new TokenBasedRememberMeServices("lingvo-movie", dataBaseUserDetailsService))
                 .and()
                 .exceptionHandling()

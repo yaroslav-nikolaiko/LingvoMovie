@@ -19,10 +19,10 @@ lingvoMovie.config(['$routeProvider',
     }]);
 
 
-lingvoMovie.run(function (localStorageService, UserService) {
+lingvoMovie.run(function (localStorageService, UserService, $rootScope) {
     var user_id = localStorageService.get("user_id");
     if(user_id) {
-        UserService.load(user_id);
+        UserService.load(user_id, function(){$rootScope.loggedIn = true});
     }
 });
 

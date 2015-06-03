@@ -48,7 +48,10 @@ controllers.controller('DictionaryModalController', function($scope,$modalInstan
 
     this.load = function(){
         $scope.dictionaries = angular.copy(DictionaryService.get());
-        $scope.selectedID = DictionaryService.getCurrent().id;
+        var current = DictionaryService.getCurrent();
+        if(current) {
+            $scope.selectedID = current.id;
+        }
     };
 
     $scope.remove = function (index) {
@@ -103,8 +106,6 @@ controllers.controller('LoginController', function($scope, $http, $location, $ro
     };
 
     $scope.login = function() {
-        console.log("Local Storage User id: " + localStorageService.get("user_id"));
-
         $http({
             method: 'POST',
             url: 'api/login',

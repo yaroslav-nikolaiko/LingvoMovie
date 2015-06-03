@@ -18,11 +18,12 @@ services.service('UserService', ['halClient','RestUtilsService', function (halCl
             });
     };
 
-    this.load = function(id) {
+    this.load = function(id, callback) {
         var self = this;
         id = id ? id : this.get().id;
         return RestUtilsService.entryPoint().then(function (entry) {
             return halClient.$get(entry.$href('users') + "/" + id).then(function(user) {
+                if(callback) callback();
                 return self.user = user;
             });
         });
@@ -53,7 +54,9 @@ services.service('DictionaryService', ['halClient','UserService', '$rootScope', 
 
     this.getCurrent = function () {
         if(this.currentDictionary) return this.currentDictionary;
-        if(this.get().length>0) return this.get()[0];
+        var dictionaries = this.get();
+        if(dictionaries.length>0) return dictionaries[0];
+        else return null;
     };
 
     this.setCurrent = function (id) {

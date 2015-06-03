@@ -27,7 +27,7 @@ import static java.util.stream.Collectors.toList;
  * Created by yaroslav on 06.05.15.
  */
 @RestController
-@RequestMapping("lookup")
+@RequestMapping("public/lookup")
 @ExposesResourceFor(LookupItem.class)
 public class LookupController implements ResourceProcessor<RepositoryLinksResource> {
     @RequestMapping(method = RequestMethod.GET)
