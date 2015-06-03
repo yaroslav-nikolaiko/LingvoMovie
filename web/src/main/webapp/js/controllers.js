@@ -2,7 +2,7 @@
 
 /* Controllers */
 
-var controllers = angular.module('controllers', ['ui.bootstrap']);
+var controllers = angular.module('controllers', ['ui.bootstrap', 'LocalStorageModule']);
 
 controllers.controller('RootController', function($scope, UserService,  LookupService) {
     $scope.loadUser = function() {
@@ -93,7 +93,7 @@ controllers.controller('DictionaryModalController', function($scope,$modalInstan
 
 //--------------------------------- Login Controller -----------------------------------
 
-controllers.controller('LoginController', function($scope, $http, $location, $rootScope, UserService){
+controllers.controller('LoginController', function($scope, $http, $location, $rootScope, UserService, localStorageService){
     $scope.init = function () {
         var pathname = window.location.href;
         if(pathname.indexOf("signup=true") > -1)  {
@@ -103,6 +103,8 @@ controllers.controller('LoginController', function($scope, $http, $location, $ro
     };
 
     $scope.login = function() {
+        console.log("Local Storage User id: " + localStorageService.get("user_id"));
+
         $http({
             method: 'POST',
             url: 'api/login',
@@ -117,6 +119,7 @@ controllers.controller('LoginController', function($scope, $http, $location, $ro
         }).success(function (id, status, headers, config) {
             $rootScope.loggedIn = true;
             UserService.load(id);
+            localStorageService.set("user_id", id);
             $location.path('/home');
         }).error(function(data, status, headers, config) {
             $rootScope.loggedIn = false;

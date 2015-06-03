@@ -18,6 +18,14 @@ lingvoMovie.config(['$routeProvider',
             });
     }]);
 
+
+lingvoMovie.run(function (localStorageService, UserService) {
+    var user_id = localStorageService.get("user_id");
+    if(user_id) {
+        UserService.load(user_id);
+    }
+});
+
 lingvoMovie.factory('unAuthorizedInterceptor', ['$q', '$window','$location', function($q, $window, $location) {
     return {
         'responseError': function(errorResponse) {
@@ -36,11 +44,8 @@ lingvoMovie.factory('unAuthorizedInterceptor', ['$q', '$window','$location', fun
 
 lingvoMovie.config(['$httpProvider', function($httpProvider) {
     $httpProvider.interceptors.push('unAuthorizedInterceptor');
+    $httpProvider.defaults.withCredentials = true;
 }]);
 
-
-lingvoMovie.config(['$httpProvider', function($httpProvider) {
-        $httpProvider.defaults.withCredentials = true;
-    }])
 
 

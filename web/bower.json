@@ -12,6 +12,7 @@
     "angular-bootstrap" : "latest",
     "angular-route": "~1.3.x",
     "angular-resource": "~1.3.x",
-    "angular-hal": "latest"
+    "angular-hal": "latest",
+    "angular-local-storage" : "latest"
   }
 }
