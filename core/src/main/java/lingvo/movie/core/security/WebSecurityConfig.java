@@ -51,7 +51,10 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .successHandler((request, response, authentication) -> {
                     response.setStatus(HttpServletResponse.SC_OK);
                     response.getOutputStream().print(((UserPrincipalWithId) authentication.getPrincipal()).getId());})
-                .and().exceptionHandling()
+                .and()
+                .rememberMe().key("lingvo-movie")
+                .and()
+                .exceptionHandling()
                 .authenticationEntryPoint((req, res, authExc) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Access Denied"));
     }
 
