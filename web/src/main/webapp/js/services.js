@@ -72,6 +72,8 @@ services.service('DictionaryService', ['halClient','UserService', '$rootScope', 
         UserService.get().$patch('self', {}, {"dictionaries": dictionaries}).then(function (){
             UserService.load();
             if(onSuccess) onSuccess();
+        }, function() {
+            UserService.load();
         });
     };
 
