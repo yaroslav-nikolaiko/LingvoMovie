@@ -27,11 +27,17 @@ controllers.controller('IndexPageController', function($scope,$rootScope, $modal
         });
     };
 
-    $scope.currentDictionaryName = function(){
-        var dictionary = DictionaryService.getCurrent();
-        if( ! dictionary) return "Create Your Dictionaries";
-        return dictionary.name;
+    $scope.DictionaryService = DictionaryService;
+
+    //$scope.currentDictionaryName = currentDictionaryName2();
+    //$scope.currentDictionaryName = function(){return DictionaryService.getCurrentName();};
+    //$scope.currentDictionary = DictionaryService.currentDictionary;
+
+
+    $scope.currentDictionary = function(){
+        return DictionaryService.getCurrent();
     }
+
 });
 
 controllers.controller('DictionaryModalController', function($scope,$modalInstance, LookupService, DictionaryService, UserService) {
@@ -61,15 +67,16 @@ controllers.controller('DictionaryModalController', function($scope,$modalInstan
         }
     };
 
-    $scope.update = function () {
-        DictionaryService.update($scope.dictionaries);
-        DictionaryService.setCurrent($scope.selectedID);
+    $scope.update = function (callback) {
+        DictionaryService.update($scope.dictionaries).then(function(){
+            DictionaryService.setCurrent($scope.selectedID);
+            if(callback) callback();
+        });
     };
 
     $scope.exit = function (){
         $modalInstance.close();
     };
-
 
     $scope.createDictionary = function() {
         DictionaryService.add($scope.dictionary, function(){

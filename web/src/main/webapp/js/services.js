@@ -23,10 +23,18 @@ services.service('UserService', ['halClient','RestUtilsService', function (halCl
         id = id ? id : this.get().id;
         return RestUtilsService.entryPoint().then(function (entry) {
             return halClient.$get(entry.$href('users') + "/" + id).then(function(user) {
+                self.user = user;
                 if(callback) callback();
-                return self.user = user;
+                return user;
             });
         });
+
+/*        return RestUtilsService.entryPoint().then(function (entry) {
+            return halClient.$get(entry.$href('users') + "/" + id)}).then(function(user) {
+                self.user = user;
+                if(callback) callback();
+                return user;
+            });*/
     };
 
     this.update = function() {
@@ -45,6 +53,7 @@ services.service('UserService', ['halClient','RestUtilsService', function (halCl
 }]);
 
 services.service('DictionaryService', ['halClient','UserService', '$rootScope', function (halClient, UserService, $rootScope) {
+    var self = this;
     this.currentDictionary = null;
 
     this.get = function(){
@@ -55,8 +64,14 @@ services.service('DictionaryService', ['halClient','UserService', '$rootScope', 
     this.getCurrent = function () {
         if(this.currentDictionary) return this.currentDictionary;
         var dictionaries = this.get();
-        if(dictionaries.length>0) return dictionaries[0];
+        if(dictionaries.length>0) return this.currentDictionary=dictionaries[0];
         else return null;
+    };
+
+    this.getCurrentName = function(){
+        var dictionary = this.getCurrent();
+        if(dictionary) return dictionary.name;
+        return null;
     };
 
     this.setCurrent = function (id) {
@@ -70,16 +85,16 @@ services.service('DictionaryService', ['halClient','UserService', '$rootScope', 
         var dictionaries = this.get();
         dictionaries.push(dictionary);
         UserService.get().$patch('self', {}, {"dictionaries": dictionaries}).then(function (){
-            UserService.load();
-            if(onSuccess) onSuccess();
+            UserService.load().then(function(){if(onSuccess) onSuccess();});
+
         }, function() {
             UserService.load();
         });
     };
 
     this.update = function(dictionaries) {
-        UserService.get().$patch('self', {}, {"dictionaries": dictionaries}).then(function (){
-            UserService.load();
+        return UserService.get().$patch('self', {}, {"dictionaries": dictionaries}).then(function (){
+            return UserService.load();
         });
     };
 
