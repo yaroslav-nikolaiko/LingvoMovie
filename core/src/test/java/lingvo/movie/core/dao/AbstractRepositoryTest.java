@@ -29,7 +29,7 @@ public abstract  class AbstractRepositoryTest {
     User user;
 
     @Before
-    public void setUp() throws Exception {
+    public void setup() throws Exception {
         user = new User();
         user.setName("admin");
         user.setPassword("root");
