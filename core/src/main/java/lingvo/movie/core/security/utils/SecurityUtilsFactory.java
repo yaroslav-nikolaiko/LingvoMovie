@@ -44,8 +44,8 @@ public class SecurityUtilsFactory {
     }
 
     @Bean(name = "decisionVoters")
-    public List<AccessDecisionVoter> decisionVoters() {
-        List<AccessDecisionVoter> decisionVoters = new ArrayList<>();
+    public List<AccessDecisionVoter<? extends FilterInvocation>> decisionVoters() {
+        List<AccessDecisionVoter<? extends FilterInvocation>> decisionVoters = new ArrayList<>();
 
         decisionVoters.addAll(defaultVoters());
         decisionVoters.add(userIdDecisionVoter());
@@ -53,7 +53,7 @@ public class SecurityUtilsFactory {
         return decisionVoters;
     }
 
-    AccessDecisionVoter<FilterInvocation> userIdDecisionVoter() {
+    AccessDecisionVoter<? extends FilterInvocation> userIdDecisionVoter() {
         return new AccessDecisionVoter<FilterInvocation>() {
             @Override
             public boolean supports(ConfigAttribute attribute) {
@@ -74,7 +74,7 @@ public class SecurityUtilsFactory {
         };
     }
 
-    Collection<AccessDecisionVoter> defaultVoters() {
+    Collection<AccessDecisionVoter<? extends FilterInvocation>> defaultVoters() {
         return Arrays.asList(new WebExpressionVoter());
     }
 }

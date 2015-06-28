@@ -32,7 +32,7 @@ import java.util.List;
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired  UserDetailsService dataBaseUserDetailsService;
-    @Resource List<AccessDecisionVoter> decisionVoters;
+    @Resource List<AccessDecisionVoter<?>> decisionVoters;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
