@@ -16,6 +16,7 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.mock.http.MockHttpOutputMessage;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -42,16 +43,15 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 @Transactional
 @ActiveProfiles("test")
 public abstract class AbstractRestTest {
-    MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
+    protected MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
             MediaType.APPLICATION_JSON.getSubtype(),
             Charset.forName("utf8"));
-    MockMvc mockMvc;
-    HttpMessageConverter mappingJackson2HttpMessageConverter;
+    protected MockMvc mockMvc;
+    protected HttpMessageConverter mappingJackson2HttpMessageConverter;
     @Autowired
-    WebApplicationContext webApplicationContext;
+    protected WebApplicationContext webApplicationContext;
 
-
-    User user;
+    protected User user;
 
     @Autowired
     void setConverters(HttpMessageConverter<?>[] converters) {
