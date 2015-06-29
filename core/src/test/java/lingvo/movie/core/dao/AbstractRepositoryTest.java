@@ -7,14 +7,18 @@ import lingvo.movie.core.entity.lookup.Language;
 import lingvo.movie.core.entity.lookup.Level;
 import org.junit.Before;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.Arrays;
+
+import static lingvo.movie.core.utils.EntityFactory.userWithRoleADMIN;
 
 /**
  * Created by yaroslav on 14.03.15.
@@ -26,22 +30,10 @@ import java.util.Arrays;
 public abstract  class AbstractRepositoryTest {
     @PersistenceContext
     EntityManager em;
-    User user;
+    User admin;
 
     @Before
     public void setup() throws Exception {
-        user = new User();
-        user.setName("admin");
-        user.setPassword("root");
-        user.setEmail("admin@gmail.com");
-
-        Dictionary dictionary = new Dictionary();
-        dictionary.setLearningLanguage(Language.en);
-        dictionary.setNativeLanguage(Language.ru);
-        dictionary.setLevel(Level.ADVANCED);
-        dictionary.setName("en-ru");
-
-
-        user.setDictionaries(Arrays.asList(dictionary));
+        admin = userWithRoleADMIN();
     }
 }

@@ -1,13 +1,10 @@
 package lingvo.movie.core.rest;
 
 import lingvo.movie.Application;
-import lingvo.movie.core.entity.Dictionary;
+import lingvo.movie.core.dao.UserRepository;
 import lingvo.movie.core.entity.User;
-import lingvo.movie.core.entity.lookup.Language;
-import lingvo.movie.core.entity.lookup.Level;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
@@ -16,22 +13,19 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.mock.http.MockHttpOutputMessage;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 
+import static lingvo.movie.core.utils.EntityFactory.userWithRoleADMIN;
+import static lingvo.movie.core.utils.EntityFactory.userWithRoleUSER;
 import static org.junit.Assert.assertEquals;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 /**
@@ -51,6 +45,7 @@ public abstract class AbstractRestTest {
     @Autowired
     protected WebApplicationContext webApplicationContext;
 
+    protected User admin;
     protected User user;
 
     @Autowired
@@ -66,11 +61,9 @@ public abstract class AbstractRestTest {
 
     @Before
     public void setup() throws Exception {
+        admin = userWithRoleADMIN();
+        user = userWithRoleUSER();
         this.mockMvc = webAppContextSetup(webApplicationContext).build();
-        user = new User();
-        user.setName("admin");
-        user.setPassword("root");
-        user.setEmail("admin@gmail.com");
     }
 
     String json(Object o) throws IOException {

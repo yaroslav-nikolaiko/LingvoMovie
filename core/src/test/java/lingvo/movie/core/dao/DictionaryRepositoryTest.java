@@ -14,12 +14,12 @@ public class DictionaryRepositoryTest extends AbstractRepositoryTest{
 
     @Test
     public void userPersistShouldCascadeToDictionaries() throws Exception {
-        user = userRepository.save(user);
+        admin = userRepository.save(admin);
 
         em.flush();
         em.clear();
 
-        Dictionary dictionary = user.getDictionaries().get(0);
+        Dictionary dictionary = admin.getDictionaries().get(0);
         Long dictionaryId = dictionary.getId();
 
         assertNotNull("Dictionary Id should not be null",dictionaryId);
