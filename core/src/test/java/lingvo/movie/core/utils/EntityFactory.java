@@ -6,8 +6,11 @@ import lingvo.movie.core.entity.lookup.Language;
 import lingvo.movie.core.entity.lookup.Level;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.test.web.servlet.request.RequestPostProcessor;
 
 import java.util.Arrays;
+
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 
 /**
  * Created by ynikolaiko on 6/29/15.
@@ -37,5 +40,15 @@ public class EntityFactory {
         admin.setDictionaries(Arrays.asList(dictionary));
 
         return admin;
+    }
+
+    public static RequestPostProcessor principalWithRoleUSER() {
+        User user = userWithRoleUSER();
+        return user(user.getName()).password(user.getPassword()).roles("USER");
+    }
+
+    public static RequestPostProcessor principalWithRoleADMIN() {
+        User admin = userWithRoleADMIN();
+        return user(admin.getName()).password(admin.getPassword()).roles("ADMIN");
     }
 }

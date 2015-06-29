@@ -1,8 +1,10 @@
 package lingvo.movie.core.rest.security;
 
 import org.hamcrest.core.IsNot;
+import org.junit.Ignore;
 import org.junit.Test;
 
+import static lingvo.movie.core.utils.EntityFactory.principalWithRoleUSER;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -40,9 +42,12 @@ public class SecurityRestTest extends AbstractSecurityRestTest{
                 .andExpect(content().string(id));
     }
 
-/*    @Test
+    @Test
+    @Ignore
     public void userCouldAccessHisDictionariesTest() throws Exception {
+        String id = user.getId().toString();
 
-
-    }*/
+        mockMvc.perform(get("/users/" + id + "/dictionaries").with(principalWithRoleUSER()))
+                .andExpect(status().isOk());
+    }
 }
