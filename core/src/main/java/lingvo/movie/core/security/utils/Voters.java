@@ -14,7 +14,7 @@ public class Voters {
     static final String USERS = "users";
 
     public static int voteByUserID(@NotNull UserPrincipalWithId user, @NotNull String url) {
-        Pattern pattern = Pattern.compile(".*/"+USERS+"/(\\d+)/.*");
+        Pattern pattern = Pattern.compile(".*/"+USERS+"/(\\d+).*");
         Matcher matcher = pattern.matcher(url);
         if (matcher.find()) {
             Long requestId = Long.valueOf(matcher.group(1));
