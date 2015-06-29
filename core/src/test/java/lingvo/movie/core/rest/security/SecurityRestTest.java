@@ -3,6 +3,11 @@ package lingvo.movie.core.rest.security;
 import org.hamcrest.core.IsNot;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultActions;
+
+import javax.servlet.http.Cookie;
 
 import static lingvo.movie.core.utils.EntityFactory.principalWithRoleUSER;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -47,7 +52,17 @@ public class SecurityRestTest extends AbstractSecurityRestTest{
     public void userCouldAccessHisDictionariesTest() throws Exception {
         String id = user.getId().toString();
 
-        mockMvc.perform(get("/users/" + id + "/dictionaries").with(principalWithRoleUSER()))
+        MockHttpServletResponse loginResponse = mockMvc.perform(post("/login")
+                .param("username", admin.getName())
+                .param("password", admin.getPassword()))
+                .andReturn().getResponse();
+
+        Cookie jsessionid = loginResponse.getCookie("JSESSIONID");
+
+/*        mockMvc.perform(get("/users/" + id + "/dictionaries").with(principalWithRoleUSER()))
+                .andExpect(status().isOk()); */
+        mockMvc.perform(get("/users/" + id + "/dictionaries")
+                .cookie(jsessionid))
                 .andExpect(status().isOk());
     }
 }
