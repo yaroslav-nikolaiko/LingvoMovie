@@ -24,7 +24,7 @@ public class MediaItem {
 
     @ElementCollection
     @JoinTable(name="MEDIA_ITEM_META_INFO")
-    @MapKeyColumn(name = "attr_name", unique = true)
+    @MapKeyColumn(name = "attr_name")
     @Column(name="attr_value")
     Map<String, String> metaInfo = new HashMap<>();
 
