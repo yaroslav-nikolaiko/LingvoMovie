@@ -84,4 +84,16 @@ public class UserRepositoryTest extends AbstractRepositoryTest{
 
         assertNull(userRepository.findByName("nonExistedName"));
     }
+
+    @Test
+    public void shouldCascadePersistToMediaItems() throws Exception {
+        admin = userRepository.save(admin);
+        em.flush();
+        em.clear();
+
+        int expectedMediaItemsSize = this.admin.getDictionaries().get(0).getMediaItems().size();
+        int actualMediaItemsSize = userRepository.findOne(this.admin.getId()).getDictionaries().get(0).getMediaItems().size();
+
+        assertEquals(expectedMediaItemsSize, actualMediaItemsSize);
+    }
 }
