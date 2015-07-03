@@ -38,7 +38,7 @@ public class Dictionary {
     @Enumerated(EnumType.STRING)
     Level level;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "dictionary_id")
     List<MediaItem> mediaItems = new ArrayList<>();
 
