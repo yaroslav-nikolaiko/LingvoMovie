@@ -32,17 +32,19 @@ public class EntityFactory {
         admin.setPassword("root");
         admin.setEmail("admin@gmail.com");
 
+        admin.setDictionaries(Arrays.asList(dictionary()));
+
+        return admin;
+    }
+
+    public static Dictionary dictionary() {
         Dictionary dictionary = new Dictionary();
         dictionary.setLearningLanguage(Language.en);
         dictionary.setNativeLanguage(Language.ru);
         dictionary.setLevel(Level.ADVANCED);
         dictionary.setName("en-ru");
         dictionary.setMediaItems(mediaItems());
-
-
-        admin.setDictionaries(Arrays.asList(dictionary));
-
-        return admin;
+        return dictionary;
     }
 
     public static List<MediaItem> mediaItems() {
