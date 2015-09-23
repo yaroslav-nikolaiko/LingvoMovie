@@ -6,9 +6,9 @@
 
 controllers.controller('IndexPageController', function($scope,$rootScope, $modal, DictionaryService, UserService) {
     $scope.dictionaryDialog = function() {
-        //$dialogs.create('dialogs/dictionary.html');
+        //$dialogs.create('dialogs/dictionaries.html');
         $modal.open({
-            templateUrl: 'dialogs/dictionary.html',
+            templateUrl: 'dialogs/dictionaries.html',
             controller: 'DictionaryModalController'
         });
     };

@@ -27,22 +27,12 @@ services.service('UserService', ['halClient','RestUtilsService', function (halCl
                 return user;
             });
         });
-
-        /*        return RestUtilsService.entryPoint().then(function (entry) {
-         return halClient.$get(entry.$href('users') + "/" + id)}).then(function(user) {
-         self.user = user;
-         if(callback) callback();
-         return user;
-         });*/
     };
 
     this.update = function() {
         //var user = UserService.user;
         if(! this.user) return; //TODO : throw error 'You are not log in.'
         this.user.$put('self', {}, this.user);
-        /*        halClient.$post(user.$href('self') + '/dictionaries/', {}, dictionary).then(function(response) {
-         console.log(response);
-         });*/
     };
 
     this.get = function() {

@@ -14,7 +14,8 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 /**
  * Created by yaroslav on 6/28/15.
  */
-public class AbstractSecurityRestTest extends AbstractRestTest {
+
+public abstract class AbstractSecurityRestTest extends AbstractRestTest {
     @Autowired
     UserRepository userRepository;
 

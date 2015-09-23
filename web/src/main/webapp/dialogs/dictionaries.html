@@ -1,0 +1,48 @@
+<div id="manage-dictionary" ng-modal="showModal" close="cancel()">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4>Manage Your Dictionaries</h4>
+    </div>
+
+    <div class="modal-body">
+        <accordion close-others="true">
+            <accordion-group ng-repeat="dictionary in dictionaries" is-open="status.open">
+                <accordion-heading >
+                    <input type="radio" ng-value="dictionary.id" ng-model="$parent.$parent.$parent.$parent.selectedID"  ng-click="$event.stopPropagation();">
+                    {{dictionary.name}}
+                    <div class="pull-right" ng-show="status.open">
+                        <button class="btn btn-danger btn-xs" title="Remove" ng-click="$event.stopPropagation(); remove($index);">
+                            <span class="glyphicon glyphicon-remove"/>
+                        </button>
+                    </div>
+                    <!--<i class="pull-right glyphicon" ng-hide="status.open"  ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>-->
+                </accordion-heading>
+                <div ng-include="'dialogs/dictionary.html'"></div>
+            </accordion-group>
+        </accordion>
+
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-info" ng-click="update(exit);" title="Update">Ok</button>
+        <button class="btn btn-success" onClick="$('#manage-dictionary').hide(); $('#create-dictionary').show()">Create New</button>
+        <button class="btn" ng-click="exit()">Cancel</button>
+    </div>
+</div>
+
+
+
+
+<div id="create-dictionary" ng-modal="showModal" close="cancel()" style="display:none;">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4>Create Your Dictionaries</h4>
+    </div>
+    <div class="modal-body" ng-include="'dialogs/dictionary.html'">
+
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-success" ng-click="createDictionary()">Create</button>
+        <button class="btn" onClick="$('#manage-dictionary').show(); $('#create-dictionary').hide()">Cancel</button>
+    </div>
+</div>
