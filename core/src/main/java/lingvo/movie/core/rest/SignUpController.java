@@ -1,4 +1,4 @@
-package lingvo.movie.core.security.utils;
+package lingvo.movie.core.rest;
 
 import lingvo.movie.core.dao.UserRepository;
 import lingvo.movie.core.entity.User;

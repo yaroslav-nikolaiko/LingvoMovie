@@ -1,4 +1,4 @@
-package lingvo.movie.core.security.utils;
+package lingvo.movie.core.security;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;

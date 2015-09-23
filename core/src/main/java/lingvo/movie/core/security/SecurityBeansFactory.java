@@ -1,4 +1,4 @@
-package lingvo.movie.core.security.utils;
+package lingvo.movie.core.security;
 
 import lingvo.movie.core.dao.UserRepository;
 import lingvo.movie.core.entity.User;
@@ -14,17 +14,20 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.expression.WebExpressionVoter;
 
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 /**
  * Created by yaroslav on 02.05.15.
  */
 @Configuration
-public class SecurityUtilsFactory {
+public class SecurityBeansFactory {
     @Autowired
     UserRepository userRepository;
 
@@ -53,6 +56,10 @@ public class SecurityUtilsFactory {
         return decisionVoters;
     }
 
+    Collection<AccessDecisionVoter<? extends FilterInvocation>> defaultVoters() {
+        return Arrays.asList(new WebExpressionVoter());
+    }
+
     AccessDecisionVoter<? extends FilterInvocation> userIdDecisionVoter() {
         return new AccessDecisionVoter<FilterInvocation>() {
             @Override
@@ -68,13 +75,19 @@ public class SecurityUtilsFactory {
             @Override
             public int vote(Authentication authentication, FilterInvocation object, Collection<ConfigAttribute> attributes) {
                 if(authentication.getPrincipal() instanceof UserPrincipalWithId)
-                    return Voters.voteByUserID((UserPrincipalWithId) authentication.getPrincipal(), object.getRequestUrl());
+                    return voteByUserID((UserPrincipalWithId) authentication.getPrincipal(), object.getRequestUrl());
                 return 0;
             }
-        };
-    }
 
-    Collection<AccessDecisionVoter<? extends FilterInvocation>> defaultVoters() {
-        return Arrays.asList(new WebExpressionVoter());
+            int voteByUserID(@NotNull UserPrincipalWithId user, @NotNull String url) {
+                Pattern pattern = Pattern.compile(".*/users/(\\d+).*");
+                Matcher matcher = pattern.matcher(url);
+                if (matcher.find()) {
+                    Long requestId = Long.valueOf(matcher.group(1));
+                    return requestId.equals(user.getId()) ? ACCESS_GRANTED : ACCESS_DENIED;
+                }
+                else return 0;
+            }
+        };
     }
 }

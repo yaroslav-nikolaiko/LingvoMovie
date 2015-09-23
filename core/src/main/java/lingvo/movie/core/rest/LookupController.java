@@ -38,10 +38,8 @@ public class LookupController implements ResourceProcessor<RepositoryLinksResour
         return Collections.emptyList();
     }
 
-    List<LookupItem> getItems(Class clazz) {
-        return Arrays.asList(clazz.getEnumConstants()).stream()
-                .map(item -> LookupItem.clone((LookupItem)item))
-                .collect(toList());
+    List<LookupItem> getItems(Class<?> clazz) {
+        return Arrays.asList((LookupItem[])clazz.getEnumConstants());
     }
 
     @Override
