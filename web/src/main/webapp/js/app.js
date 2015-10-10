@@ -5,7 +5,7 @@
 var lingvoMovie = angular.module('lingvoMovie', ['ngRoute', 'ui.bootstrap', 'services', 'controllers']);
 
 var services = angular.module('services', [ 'angular-hal']);
-var controllers = angular.module('controllers', ['ui.bootstrap', 'LocalStorageModule']);
+var controllers = angular.module('controllers', ['ui.bootstrap', 'LocalStorageModule', 'ui.tree']);
 
 
 lingvoMovie.config(['$routeProvider',

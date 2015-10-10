@@ -4,10 +4,10 @@
  * Created by yaroslav on 27.06.15.
  */
 
-controllers.controller('IndexPageController', function($scope,$rootScope, $modal, DictionaryService, UserService) {
+controllers.controller('IndexPageController', function($scope,$rootScope, $uibModal, DictionaryService, UserService) {
     $scope.dictionaryDialog = function() {
         //$dialogs.create('dialogs/dictionaries.html');
-        $modal.open({
+        $uibModal.open({
             templateUrl: 'dialogs/dictionaries.html',
             controller: 'DictionaryModalController'
         });

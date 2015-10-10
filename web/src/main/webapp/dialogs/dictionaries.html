@@ -5,9 +5,9 @@
     </div>
 
     <div class="modal-body">
-        <accordion close-others="true">
-            <accordion-group ng-repeat="dictionary in dictionaries" is-open="status.open">
-                <accordion-heading >
+        <uib-accordion close-others="true">
+            <uib-accordion-group ng-repeat="dictionary in dictionaries" is-open="status.open">
+                <uib-accordion-heading >
                     <input type="radio" ng-value="dictionary.id" ng-model="$parent.$parent.$parent.$parent.selectedID"  ng-click="$event.stopPropagation();">
                     {{dictionary.name}}
                     <div class="pull-right" ng-show="status.open">
@@ -16,10 +16,10 @@
                         </button>
                     </div>
                     <!--<i class="pull-right glyphicon" ng-hide="status.open"  ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>-->
-                </accordion-heading>
+                </uib-accordion-heading>
                 <div ng-include="'dialogs/dictionary.html'"></div>
-            </accordion-group>
-        </accordion>
+            </uib-accordion-group>
+        </uib-accordion>
 
     </div>
 
