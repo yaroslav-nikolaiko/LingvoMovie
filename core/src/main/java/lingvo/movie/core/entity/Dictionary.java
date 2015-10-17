@@ -1,5 +1,6 @@
 package lingvo.movie.core.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lingvo.movie.core.entity.lookup.Language;
 import lingvo.movie.core.entity.lookup.Level;
 import lombok.Data;
@@ -40,6 +41,7 @@ public class Dictionary {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "dictionary_id")
+    @JsonIgnore
     List<MediaItem> mediaItems = new ArrayList<>();
 
 
