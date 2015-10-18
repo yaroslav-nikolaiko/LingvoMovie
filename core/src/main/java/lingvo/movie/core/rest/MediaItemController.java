@@ -8,6 +8,8 @@ import lingvo.movie.core.entity.dto.MediaItemsTreeView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 import static lingvo.movie.core.utils.TreeViewMapper.toTreeView;
@@ -40,10 +42,14 @@ public class MediaItemController {
     }
 
     @RequestMapping( method = RequestMethod.POST)
-    public MediaItem create(@RequestBody MediaItem item, @PathVariable Long dictionaryId) {
+    public MediaItem create(@RequestBody MediaItem item, @PathVariable Long dictionaryId,
+                            HttpServletResponse response, HttpServletRequest request) {
         Dictionary dictionary = dictionaryRepository.findOne(dictionaryId);
         item.setDictionary(dictionary);
-        return mediaItemRepository.save(item);
+        item =  mediaItemRepository.save(item);
+        response.setStatus(HttpServletResponse.SC_CREATED);
+        response.setHeader("Location", request.getContextPath()+"/"+MediaItemRepository.URL_PATH+"/"+item.getId());
+        return item;
     }
 
     MediaItem mediaItem(String displayPath, String name) {

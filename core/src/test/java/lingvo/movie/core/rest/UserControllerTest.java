@@ -1,20 +1,13 @@
 package lingvo.movie.core.rest;
 
-import lingvo.movie.core.dao.UserRepository;
 import lingvo.movie.core.entity.Dictionary;
-import lingvo.movie.core.entity.MediaItem;
 import lingvo.movie.core.entity.User;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockHttpServletResponse;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import java.util.List;
-
-import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -22,11 +15,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Created by yaroslav on 6/27/15.
  */
 public class UserControllerTest extends AbstractRestTest {
-    @Autowired
-    UserRepository userRepository;
-    @PersistenceContext
-    EntityManager em;
-
     @Test
     public void postUserTest() throws Exception {
         MockHttpServletResponse response = mockMvc.perform(post("/users")

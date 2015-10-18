@@ -19,6 +19,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.Arrays;
@@ -40,10 +42,12 @@ public abstract class AbstractRestTest {
     protected MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
             MediaType.APPLICATION_JSON.getSubtype(),
             Charset.forName("utf8"));
+    @Autowired protected WebApplicationContext webApplicationContext;
+    @Autowired protected UserRepository userRepository;
+    @PersistenceContext protected EntityManager em;
+
     protected MockMvc mockMvc;
     protected HttpMessageConverter mappingJackson2HttpMessageConverter;
-    @Autowired
-    protected WebApplicationContext webApplicationContext;
 
     protected User admin;
     protected User user;
