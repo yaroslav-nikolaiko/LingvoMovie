@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -76,35 +77,43 @@ public class SecurityBeansFactory {
             public int vote(Authentication authentication, FilterInvocation object, Collection<ConfigAttribute> attributes) {
                 if(authentication.getPrincipal() instanceof UserPrincipalWithId){
                     String url = object.getRequestUrl();
-                    if(url.contains("/users/"))
-                        return voteByUserID((UserPrincipalWithId) authentication.getPrincipal(), url);
-                    else if(url.contains("/dictionaries/"))
-                        return voteByDictionaryID((UserPrincipalWithId) authentication.getPrincipal(), url);
-                }
+                    UserPrincipalWithId principal = (UserPrincipalWithId) authentication.getPrincipal();
 
+                    String entity;
+                    Function<Long, Long> userIdExtractor = null;
+
+                    if (contains(url, entity = "users"))
+                        userIdExtractor = id -> id;
+                    else if (contains(url, entity = "dictionaries"))
+                        userIdExtractor = userRepository::getUserIdByDictionaryId;
+                    else if (contains(url, entity = "mediaItems"))
+                        userIdExtractor = userRepository::getUserIdByMediaItemId;
+
+                    if(userIdExtractor != null)
+                        return vote(extractIdFromUrl(entity, url), principal, userIdExtractor);
+                }
                 return 0;
             }
 
-            int voteByDictionaryID(UserPrincipalWithId user, String url) {
-                Pattern pattern = Pattern.compile(".*/dictionaries/(\\d+).*");
-                Matcher matcher = pattern.matcher(url);
-                if (matcher.find()) {
-                    Long dictionaryId = Long.valueOf(matcher.group(1));
-                    Long userId = userRepository.getUserIdByDictionaryId(dictionaryId);
-                    return user.getId().equals(userId) ? ACCESS_GRANTED : ACCESS_DENIED;
-                }
-                else return 0;
+            int vote(Long entityId, UserPrincipalWithId principal, Function<Long, Long> userIdExtractor) {
+                if (entityId > 0) {
+                    Long userId = userIdExtractor.apply(entityId);
+                    return principal.getId().equals(userId) ? ACCESS_GRANTED : ACCESS_DENIED;
+                } else
+                    return 0;
             }
 
-            int voteByUserID(@NotNull UserPrincipalWithId user, @NotNull String url) {
-                Pattern pattern = Pattern.compile(".*/users/(\\d+).*");
-                Matcher matcher = pattern.matcher(url);
-                if (matcher.find()) {
-                    Long requestId = Long.valueOf(matcher.group(1));
-                    return requestId.equals(user.getId()) ? ACCESS_GRANTED : ACCESS_DENIED;
-                }
-                else return 0;
+            boolean contains(String url, String entity) {
+                return url.contains("/" + entity + "/");
             }
+
+            Long extractIdFromUrl(String entity, String url){
+                Pattern pattern = Pattern.compile(".*/"+entity+"/(\\d+).*");
+                Matcher matcher = pattern.matcher(url);
+                return matcher.find() ? Long.valueOf(matcher.group(1)) : -1L;
+            }
+
+
         };
     }
 }
