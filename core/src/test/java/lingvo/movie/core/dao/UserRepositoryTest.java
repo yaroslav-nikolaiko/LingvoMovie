@@ -10,26 +10,13 @@ import javax.validation.ConstraintViolationException;
 import static org.junit.Assert.*;
 
 public class UserRepositoryTest extends AbstractRepositoryTest{
-    @Autowired
-    UserRepository userRepository;
-
     @Test
     public void findSavedUserById() throws Exception {
-        admin = userRepository.save(admin);
-
-        em.flush();
-        em.clear();
-
         assertEquals(admin, userRepository.findOne(admin.getId()));
     }
 
     @Test
     public void checkEagerFetchDictionaries() throws Exception {
-        admin = userRepository.save(admin);
-
-        em.flush();
-        em.clear();
-
         User admin = userRepository.findOne(this.admin.getId());
         em.clear(); //To clear L1 cache. That how we will know that dictionaries fetched EAGRly
         assertEquals(this.admin.getDictionaries().size(), admin.getDictionaries().size());
@@ -37,10 +24,6 @@ public class UserRepositoryTest extends AbstractRepositoryTest{
 
     @Test
     public void checkOrphanRemovalDictionaries() throws Exception {
-        admin = userRepository.save(admin);
-        em.flush();
-        em.clear();
-
         User admin = userRepository.findOne(this.admin.getId());
         admin.removeDictionary(admin.getDictionaries().get(0));
         em.flush();
@@ -56,41 +39,26 @@ public class UserRepositoryTest extends AbstractRepositoryTest{
         admin.setEmail("wrong.email.format");
 
         admin = userRepository.save(admin);
+        em.flush();
     }
 
     @Test
     public void findByName() throws Exception {
-        admin = userRepository.save(admin);
-        em.flush();
-        em.clear();
-
         assertEquals(admin, userRepository.findByName(admin.getName()));
     }
 
     @Test
     public void findByNameAndPassword() throws Exception {
-        admin = userRepository.save(admin);
-        em.flush();
-        em.clear();
-
         assertEquals(admin, userRepository.findByNameAndPassword(admin.getName(), admin.getPassword()));
     }
 
     @Test
     public void findByNonExistedName() throws Exception {
-        admin = userRepository.save(admin);
-        em.flush();
-        em.clear();
-
         assertNull(userRepository.findByName("nonExistedName"));
     }
 
     @Test
     public void shouldCascadePersistToMediaItems() throws Exception {
-        admin = userRepository.save(admin);
-        em.flush();
-        em.clear();
-
         int expectedMediaItemsSize = this.admin.getDictionaries().get(0).getMediaItems().size();
         int actualMediaItemsSize = userRepository.findOne(this.admin.getId()).getDictionaries().get(0).getMediaItems().size();
 

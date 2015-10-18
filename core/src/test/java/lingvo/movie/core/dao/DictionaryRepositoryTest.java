@@ -11,16 +11,9 @@ import static org.junit.Assert.*;
 public class DictionaryRepositoryTest extends AbstractRepositoryTest{
     @Autowired
     DictionaryRepository dictionaryRepository;
-    @Autowired
-    UserRepository userRepository;
 
     @Test
     public void userPersistShouldCascadeToDictionaries() throws Exception {
-        admin = userRepository.save(admin);
-
-        em.flush();
-        em.clear();
-
         Dictionary dictionary = admin.getDictionaries().get(0);
         Long dictionaryId = dictionary.getId();
 
@@ -30,7 +23,6 @@ public class DictionaryRepositoryTest extends AbstractRepositoryTest{
 
     @Test(expected = LazyInitializationException.class)
     public void mediaItemsLazyFetchTest() throws Exception {
-        admin = userRepository.save(admin);
         Dictionary dictionary = admin.getDictionaries().get(0);
 
         em.flush();

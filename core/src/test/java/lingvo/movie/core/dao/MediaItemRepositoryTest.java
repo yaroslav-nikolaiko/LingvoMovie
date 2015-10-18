@@ -1,13 +1,11 @@
 package lingvo.movie.core.dao;
 
-import lingvo.movie.core.entity.MediaContent;
+import lingvo.movie.core.entity.ContentMedia;
 import lingvo.movie.core.entity.MediaItem;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Iterator;
-
-import static lingvo.movie.core.utils.EntityFactory.mediaContents;
+import static lingvo.movie.core.utils.EntityFactory.contentMedias;
 import static lingvo.movie.core.utils.EntityFactory.mediaItems;
 import static org.junit.Assert.*;
 
@@ -16,15 +14,16 @@ import static org.junit.Assert.*;
  */
 public class MediaItemRepositoryTest extends AbstractRepositoryTest{
     @Autowired MediaItemRepository mediaItemRepository;
-    @Autowired MediaContentRepository mediaContentRepository;
+    @Autowired ContentMediaRepository contentMediaRepository;
 
     @Test
     public void saveMediaContentFirstAndThanMediaItems() throws Exception {
         MediaItem item = mediaItems().get(0);
-        MediaContent content = mediaContents().get(0);
+        item.setDictionary(admin.getDictionaries().get(0));
+        ContentMedia content = contentMedias().get(0);
 
-        content = mediaContentRepository.save(content);
-        item.setMediaContent(content);
+        content = contentMediaRepository.save(content);
+        item.setContentMedia(content);
         item = mediaItemRepository.save(item);
 
         em.flush();
@@ -39,13 +38,13 @@ public class MediaItemRepositoryTest extends AbstractRepositoryTest{
 
         Iterable<MediaItem> all = mediaItemRepository.findAll();
         MediaItem item = all.iterator().next();
-        Long contentMediaId = item.getMediaContent().getId();
+        Long contentMediaId = item.getContentMedia().getId();
 
         mediaItemRepository.delete(item.getId());
 
         em.flush();
         em.clear();
 
-        assertNotNull("Media Content should still be present in DDB", mediaContentRepository.findOne(contentMediaId));
+        assertNotNull("Media Content should still be present in DB", contentMediaRepository.findOne(contentMediaId));
     }
 }

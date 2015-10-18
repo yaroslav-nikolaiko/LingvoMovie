@@ -1,17 +1,13 @@
 package lingvo.movie.core.utils;
 
 import lingvo.movie.core.entity.Dictionary;
-import lingvo.movie.core.entity.MediaContent;
+import lingvo.movie.core.entity.ContentMedia;
 import lingvo.movie.core.entity.MediaItem;
 import lingvo.movie.core.entity.User;
 import lingvo.movie.core.entity.lookup.Language;
 import lingvo.movie.core.entity.lookup.Level;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.test.web.servlet.request.RequestPostProcessor;
 
 import java.util.*;
-import java.util.stream.Stream;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 
@@ -44,7 +40,6 @@ public class EntityFactory {
         dictionary.setNativeLanguage(Language.ru);
         dictionary.setLevel(Level.ADVANCED);
         dictionary.setName("en-ru");
-        dictionary.setMediaItems(mediaItems());
         return dictionary;
     }
 
@@ -75,10 +70,10 @@ public class EntityFactory {
         return mediaItems;
     }
 
-    public static List<MediaContent> mediaContents() {
-        List<MediaContent> contents = new ArrayList<>();
+    public static List<ContentMedia> contentMedias() {
+        List<ContentMedia> contents = new ArrayList<>();
 
-        MediaContent content1 = new MediaContent();
+        ContentMedia content1 = new ContentMedia();
         content1.setHashSum(111L);
 
         Map<String, String> metaInfo1 = new HashMap<>();
@@ -86,7 +81,7 @@ public class EntityFactory {
         metaInfo1.put("hd", "tru");
         content1.setMetaInfo(metaInfo1);
 
-        MediaContent content2 = new MediaContent();
+        ContentMedia content2 = new ContentMedia();
         content2.setHashSum(222L);
 
         Map<String, String> metaInfo2 = new HashMap<>();

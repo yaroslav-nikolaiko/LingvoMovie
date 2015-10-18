@@ -1,6 +1,5 @@
 package lingvo.movie.core.dao;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lingvo.movie.core.entity.MediaItem;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;

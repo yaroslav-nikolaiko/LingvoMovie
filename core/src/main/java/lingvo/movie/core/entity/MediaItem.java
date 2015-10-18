@@ -1,5 +1,6 @@
 package lingvo.movie.core.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -28,6 +29,11 @@ public class MediaItem {
     @Column(name="attr_value")
     Map<String, String> metaInfo = new HashMap<>();
 
-    @ManyToOne
-    MediaContent mediaContent;
+    @ManyToOne(fetch = FetchType.LAZY)
+    ContentMedia contentMedia;
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "dictionary_id", nullable = false)
+    @JsonIgnore Dictionary dictionary;
 }

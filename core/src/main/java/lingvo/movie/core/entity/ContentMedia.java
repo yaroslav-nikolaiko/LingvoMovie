@@ -12,10 +12,10 @@ import java.util.Map;
  * Created by yaroslav on 01.03.15.
  */
 @Entity
-@Table(name = "MEDIA_CONTENT")
+@Table(name = "CONTENT_MEDIA")
 @Data
 @ToString(of = {"hashSum", "id"}) @EqualsAndHashCode(of = {"hashSum", "physicalStorage", "originalText"})
-public class MediaContent {
+public class ContentMedia {
     @Id @GeneratedValue
     Long id;
     Long hashSum;
@@ -29,7 +29,7 @@ public class MediaContent {
     List<Text> texts;
 
     @ElementCollection
-    @JoinTable(name="MEDIA_CONTENT_META_INFO")
+    @JoinTable(name="CONTENT_MEDIA_META_INFO")
     @MapKeyColumn(name = "attr_name", unique = true)
     @Column(name="attr_value")
     Map<String, String> metaInfo;

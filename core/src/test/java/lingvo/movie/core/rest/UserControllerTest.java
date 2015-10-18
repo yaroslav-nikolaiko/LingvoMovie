@@ -42,10 +42,9 @@ public class UserControllerTest extends AbstractRestTest {
     }
 
     @Test
-    public void getUserByIdWithDictionariesAndMediaItemsTest() throws Exception {
+    public void getUserByIdWithDictionariesTest() throws Exception {
         User admin = userRepository.save(this.admin);
         Dictionary dictionary = admin.getDictionaries().get(0);
-        List<MediaItem> mediaItems = dictionary.getMediaItems();
 
         em.flush();
         em.clear();//to clear L1 cache and perform actual select from DB
@@ -53,9 +52,9 @@ public class UserControllerTest extends AbstractRestTest {
         mockMvc.perform(get("/users/" + admin.getId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name", is(admin.getName())))
-                .andExpect(jsonPath(".dictionaries[0].name", is(dictionary.getName())))
-                .andExpect(jsonPath(".dictionaries[0].mediaItems", hasSize(mediaItems.size())))
-                .andExpect(jsonPath(".dictionaries[0].mediaItems[0].name", is(mediaItems.get(0).getName())));
+                .andExpect(jsonPath(".dictionaries[0].name", is(dictionary.getName())));
+/*                .andExpect(jsonPath(".dictionaries[0].mediaItems", hasSize(mediaItems.size())))
+                .andExpect(jsonPath(".dictionaries[0].mediaItems[0].name", is(mediaItems.get(0).getName())));*/
 
     }
 }

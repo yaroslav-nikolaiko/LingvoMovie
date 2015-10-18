@@ -8,6 +8,7 @@ import lingvo.movie.core.entity.lookup.Level;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -32,8 +33,14 @@ public abstract  class AbstractRepositoryTest {
     EntityManager em;
     User admin;
 
+    @Autowired UserRepository userRepository;
+
     @Before
     public void setup() throws Exception {
         admin = userWithRoleADMIN();
+        admin = userRepository.save(admin);
+
+        em.flush();
+        em.clear();
     }
 }
