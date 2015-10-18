@@ -35,52 +35,112 @@ controllers.controller('MediaItemsController', ['$scope', function ($scope) {
         $scope.$broadcast('expandAll');
     };
 
-    $scope.data = [{
-        'id': 1,
-        'title': 'node1',
-        'nodes': [
-            {
-                'id': 11,
-                'title': 'node1.1',
-                'nodes': [
-                    {
-                        'id': 111,
-                        'title': 'node1.1.1',
-                        'nodes': []
-                    }
-                ]
-            },
-            {
-                'id': 12,
-                'title': 'node1.2',
-                'nodes': []
-            }
-        ]
+    $scope.data = [ {
+        "title" : "HIMYM",
+        "displayPath" : "HIMYM",
+        "item" : null,
+        "nodes" : [ {
+            "title" : "season 1",
+            "displayPath" : "HIMYM/season 1",
+            "item" : null,
+            "nodes" : [ {
+                "title" : "1 episode",
+                "displayPath" : "HIMYM/season 1",
+                "item" : {
+                    "name" : "1 episode",
+                    "displayPath" : "HIMYM/season 1",
+                    "metaInfo" : { }
+                },
+                "nodes" : [ ]
+            }, {
+                "title" : "episode 2",
+                "displayPath" : "HIMYM/season 1",
+                "item" : {
+                    "name" : "episode 2",
+                    "displayPath" : "HIMYM/season 1",
+                    "metaInfo" : { }
+                },
+                "nodes" : [ ]
+            }, {
+                "title" : "episode 3",
+                "displayPath" : "HIMYM/season 1",
+                "item" : {
+                    "name" : "episode 3",
+                    "displayPath" : "HIMYM/season 1",
+                    "metaInfo" : { }
+                },
+                "nodes" : [ ]
+            } ]
+        }, {
+            "title" : "season 2",
+            "displayPath" : "HIMYM/season 2",
+            "item" : null,
+            "nodes" : [ {
+                "title" : "1 episode",
+                "displayPath" : "HIMYM/season 2",
+                "item" : {
+                    "name" : "1 episode",
+                    "displayPath" : "HIMYM/season 2",
+                    "metaInfo" : { }
+                },
+                "nodes" : [ ]
+            }, {
+                "title" : "2 episode",
+                "displayPath" : "HIMYM/season 2",
+                "item" : {
+                    "name" : "2 episode",
+                    "displayPath" : "HIMYM/season 2",
+                    "metaInfo" : { }
+                },
+                "nodes" : [ ]
+            } ]
+        } ]
     }, {
-        'id': 2,
-        'title': 'node2',
-        'nodrop': true, // An arbitrary property to check in custom template for nodrop-enabled
-        'nodes': [
-            {
-                'id': 21,
-                'title': 'node2.1',
-                'nodes': []
-            },
-            {
-                'id': 22,
-                'title': 'node2.2',
-                'nodes': []
-            }
-        ]
+        "title" : "TVShows",
+        "displayPath" : "TVShows",
+        "item" : null,
+        "nodes" : [ {
+            "title" : "entertainment",
+            "displayPath" : "TVShows/entertainment",
+            "item" : null,
+            "nodes" : [ {
+                "title" : "nightShow",
+                "displayPath" : "TVShows/entertainment/nightShow",
+                "item" : null,
+                "nodes" : [ {
+                    "title" : "first",
+                    "displayPath" : "TVShows/entertainment/nightShow",
+                    "item" : {
+                        "name" : "first",
+                        "displayPath" : "TVShows/entertainment/nightShow",
+                        "metaInfo" : { }
+                    },
+                    "nodes" : [ ]
+                }, {
+                    "title" : "second",
+                    "displayPath" : "TVShows/entertainment/nightShow",
+                    "item" : {
+                        "name" : "second",
+                        "displayPath" : "TVShows/entertainment/nightShow",
+                        "metaInfo" : { }
+                    },
+                    "nodes" : [ ]
+                } ]
+            } ]
+        } ]
     }, {
-        'id': 3,
-        'title': 'node3',
-        'nodes': [
-            {
-                'id': 31,
-                'title': 'node3.1',
-                'nodes': []
-            }
-        ]
-    }];
+        "title" : "movies",
+        "displayPath" : "movies",
+        "item" : null,
+        "nodes" : [ {
+            "title" : "Interstellar",
+            "displayPath" : "movies",
+            "item" : {
+                "name" : "Interstellar",
+                "displayPath" : "movies",
+                "metaInfo" : { }
+            },
+            "nodes" : [ ]
+        } ]
+    } ]
 }]);

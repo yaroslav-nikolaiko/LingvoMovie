@@ -1,6 +1,7 @@
 package lingvo.movie.core.utils;
 
 import lingvo.movie.core.entity.Dictionary;
+import lingvo.movie.core.entity.MediaContent;
 import lingvo.movie.core.entity.MediaItem;
 import lingvo.movie.core.entity.User;
 import lingvo.movie.core.entity.lookup.Language;
@@ -70,7 +71,34 @@ public class EntityFactory {
 
         mediaItems.add(item2);
         mediaItems.add(item1);
+
         return mediaItems;
+    }
+
+    public static List<MediaContent> mediaContents() {
+        List<MediaContent> contents = new ArrayList<>();
+
+        MediaContent content1 = new MediaContent();
+        content1.setHashSum(111L);
+
+        Map<String, String> metaInfo1 = new HashMap<>();
+        metaInfo1.put("bitrate", "128");
+        metaInfo1.put("hd", "tru");
+        content1.setMetaInfo(metaInfo1);
+
+        MediaContent content2 = new MediaContent();
+        content2.setHashSum(222L);
+
+        Map<String, String> metaInfo2 = new HashMap<>();
+        metaInfo1.put("bitrate", "256");
+        metaInfo1.put("hd", "tru");
+        metaInfo1.put("name", "bla-blab-bla");
+        content2.setMetaInfo(metaInfo2);
+
+        contents.add(content1);
+        contents.add(content2);
+
+        return contents;
     }
 
 }
