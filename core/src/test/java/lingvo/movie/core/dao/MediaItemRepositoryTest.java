@@ -1,6 +1,7 @@
 package lingvo.movie.core.dao;
 
 import lingvo.movie.core.entity.ContentMedia;
+import lingvo.movie.core.entity.Dictionary;
 import lingvo.movie.core.entity.MediaItem;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,4 +48,5 @@ public class MediaItemRepositoryTest extends AbstractRepositoryTest{
 
         assertNotNull("Media Content should still be present in DB", contentMediaRepository.findOne(contentMediaId));
     }
+
 }

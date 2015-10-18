@@ -74,9 +74,26 @@ public class SecurityBeansFactory {
 
             @Override
             public int vote(Authentication authentication, FilterInvocation object, Collection<ConfigAttribute> attributes) {
-                if(authentication.getPrincipal() instanceof UserPrincipalWithId)
-                    return voteByUserID((UserPrincipalWithId) authentication.getPrincipal(), object.getRequestUrl());
+                if(authentication.getPrincipal() instanceof UserPrincipalWithId){
+                    String url = object.getRequestUrl();
+                    if(url.contains("/users/"))
+                        return voteByUserID((UserPrincipalWithId) authentication.getPrincipal(), url);
+                    else if(url.contains("/dictionaries/"))
+                        return voteByDictionaryID((UserPrincipalWithId) authentication.getPrincipal(), url);
+                }
+
                 return 0;
+            }
+
+            int voteByDictionaryID(UserPrincipalWithId user, String url) {
+                Pattern pattern = Pattern.compile(".*/dictionaries/(\\d+).*");
+                Matcher matcher = pattern.matcher(url);
+                if (matcher.find()) {
+                    Long dictionaryId = Long.valueOf(matcher.group(1));
+                    Long userId = userRepository.getUserIdByDictionaryId(dictionaryId);
+                    return user.getId().equals(userId) ? ACCESS_GRANTED : ACCESS_DENIED;
+                }
+                else return 0;
             }
 
             int voteByUserID(@NotNull UserPrincipalWithId user, @NotNull String url) {

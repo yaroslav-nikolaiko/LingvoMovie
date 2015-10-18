@@ -20,6 +20,9 @@ public class EntityFactory {
         user.setName("ivan");
         user.setPassword("1234");
         user.setEmail("ivan@gmail.com");
+
+        user.setDictionaries(Collections.singletonList(dictionary()));
+
         return user;
     }
 
@@ -29,7 +32,7 @@ public class EntityFactory {
         admin.setPassword("root");
         admin.setEmail("admin@gmail.com");
 
-        admin.setDictionaries(Arrays.asList(dictionary()));
+        admin.setDictionaries(Collections.singletonList(dictionary()));
 
         return admin;
     }

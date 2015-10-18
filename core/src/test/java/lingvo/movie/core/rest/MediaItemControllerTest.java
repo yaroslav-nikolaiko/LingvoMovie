@@ -51,7 +51,7 @@ public class MediaItemControllerTest extends AbstractRestTest{
         MediaItem mediaItem = mediaItemRepository.getAllByDictionaryId(admin.getDictionaries().get(0).getId()).get(0);
 
         MockHttpServletResponse response = mockMvc.perform(
-                patch("/"+MediaItemRepository.URL_PATH + "/" + mediaItem.getId())
+                patch("/mediaItems/" + mediaItem.getId())
                 .content("{\"name\" : \"New Name\"}")
                 .contentType(contentType))
                 .andReturn().getResponse();

@@ -16,7 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 public class UserControllerTest extends AbstractRestTest {
     @Test
-    public void postUserTest() throws Exception {
+    public void postUser() throws Exception {
         MockHttpServletResponse response = mockMvc.perform(post("/users")
                 .content(json(admin))
                 .contentType(contentType))
@@ -30,7 +30,7 @@ public class UserControllerTest extends AbstractRestTest {
     }
 
     @Test
-    public void getUserByIdWithDictionariesTest() throws Exception {
+    public void getUserByIdWithDictionaries() throws Exception {
         User admin = userRepository.save(this.admin);
         Dictionary dictionary = admin.getDictionaries().get(0);
 

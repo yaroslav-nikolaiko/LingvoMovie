@@ -17,7 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class LookupControllerTest extends AbstractRestTest{
 
     @Test
-    public void getLanguagesArraySizeTest() throws Exception {
+    public void getLanguagesArraySize() throws Exception {
         mockMvc.perform(get("/public/lookup").param("name", "language")
                 .contentType(contentType))
                 .andExpect(status().isOk())

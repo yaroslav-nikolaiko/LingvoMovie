@@ -64,4 +64,10 @@ public class UserRepositoryTest extends AbstractRepositoryTest{
 
         assertEquals(expectedMediaItemsSize, actualMediaItemsSize);
     }
+
+    @Test
+    public void getUserIdByDictionaryId() throws Exception {
+        Long dictionaryId = admin.getDictionaries().get(0).getId();
+        assertEquals(admin.getId(), userRepository.getUserIdByDictionaryId(dictionaryId));
+    }
 }

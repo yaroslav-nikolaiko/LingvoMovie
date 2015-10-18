@@ -25,20 +25,20 @@ public class TreeViewMapper {
     }
 
     static MediaItemsTreeView insertFolders(String currentPath, String fullPath, List<MediaItemsTreeView> tree) {
-        currentPath = FilenameUtils.normalizeNoEndSeparator(currentPath);
-        fullPath = FilenameUtils.normalizeNoEndSeparator(fullPath);
+        currentPath = normalize(currentPath);
+        fullPath = normalize(fullPath);
+
         String title = FilenameUtils.getBaseName(currentPath);
         Optional<MediaItemsTreeView> currentNodeOptional = tree.stream()
                 .filter(node -> node.getTitle().equals(title))
                 .findFirst();
         MediaItemsTreeView currentNode;
-        if ( ! currentNodeOptional.isPresent()){
+        if (!currentNodeOptional.isPresent()) {
             currentNode = new MediaItemsTreeView(title, currentPath);
             tree.add(currentNode);
-        }
-        else
+        } else
             currentNode = currentNodeOptional.get();
-        if( ! currentPath.equals(fullPath))
+        if (!currentPath.equals(fullPath))
             return insertFolders(getNextFolder(currentPath, fullPath), fullPath, currentNode.getNodes());
         else
             return currentNode;
@@ -54,5 +54,10 @@ public class TreeViewMapper {
         if("/".equals(String.valueOf(path.charAt(0))))
             path = path.substring(1);
         return path.indexOf("/") > 0 ? path.substring(0, path.indexOf("/")) : path;
+    }
+
+    static String normalize(String path) {
+        path = FilenameUtils.normalizeNoEndSeparator(path);
+        return path.startsWith("/") ? path.substring(1) : path;
     }
 }
