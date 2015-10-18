@@ -1,6 +1,5 @@
 package lingvo.movie.core.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lingvo.movie.core.entity.lookup.Language;
 import lingvo.movie.core.entity.lookup.Level;
 import lombok.Data;
@@ -47,27 +46,4 @@ public class Dictionary {
     @JoinColumn(name = "dictionary_id")
     @XmlTransient
     Set<WordCell> wordCells = new HashSet<>();
-
-/*
-
-    public void addMediaItem(MediaItem item) {
-        mediaItems.add(item);
-    }
-
-    public void removeMediaItems(Collection<MediaItem> items){
-        mediaItems.removeAll(items);
-    }
-
-    public void removeMediaItem(MediaItem item){
-        mediaItems.remove(item);
-    }
-
-
-    public void update(Dictionary managedDictionary) {
-        this.name = managedDictionary.name;
-        this.learningLanguage = managedDictionary.learningLanguage;
-        this.nativeLanguage = managedDictionary.nativeLanguage;
-        this.level = managedDictionary.level;
-        this.mediaItems = managedDictionary.mediaItems;
-    }*/
 }

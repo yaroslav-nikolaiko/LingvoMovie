@@ -1,7 +1,5 @@
 package lingvo.movie.core.entity.lookup;
 
-import lombok.Data;
-
 /**
  * Created by yaroslav on 06.05.15.
  */

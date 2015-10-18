@@ -6,10 +6,8 @@ import lingvo.movie.core.entity.Dictionary;
 import lingvo.movie.core.entity.MediaItem;
 import lingvo.movie.core.entity.dto.MediaItemsTreeView;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static lingvo.movie.core.utils.TreeViewMapper.toTreeView;

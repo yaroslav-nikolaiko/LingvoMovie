@@ -18,9 +18,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
-
-
-
 /**
  * Created by yaroslav on 02.05.15.
  */

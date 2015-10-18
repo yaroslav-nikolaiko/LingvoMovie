@@ -1,7 +1,5 @@
 package lingvo.movie.core.entity.lookup;
 
-import lingvo.movie.core.entity.lookup.LookupItem;
-
 /**
  * Created by yaroslav on 6/1/14.
  */
