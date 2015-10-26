@@ -49,35 +49,12 @@ public class MediaItemControllerTest extends AbstractRestTest{
 
     @Test
     public void createContentMediaTest() throws Exception {
-/*        ContentMedia contentMedia = contentMedias().get(0);
-
-        String json = json(contentMedia);
-        MockHttpServletResponse response = mockMvc.perform(post("/contentMedias")
-                .content(json)
-                .contentType(contentType))
-                .andExpect(status().isCreated())
-                .andReturn().getResponse();*/
-
         String link = createContentMedia();
 
         mockMvc.perform(get(link))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", notNullValue()));
     }
-
-    public String createContentMedia() throws Exception {
-        ContentMedia contentMedia = contentMedias().get(0);
-
-        String json = json(contentMedia);
-        MockHttpServletResponse response = mockMvc.perform(post("/contentMedias")
-                .content(json)
-                .contentType(contentType))
-                .andExpect(status().isCreated())
-                .andReturn().getResponse();
-
-        return response.getHeader("Location");
-    }
-
 
     @Test
     public void createItemWithLinkToContentMediaInExistingDictionary() throws Exception {
@@ -124,5 +101,18 @@ public class MediaItemControllerTest extends AbstractRestTest{
         assertEquals("New Name", updated.getName());
         assertEquals(mediaItem.getDisplayPath(), updated.getDisplayPath());
         assertEquals(mediaItem.getDictionary().getId(), updated.getDictionary().getId());
+    }
+
+    String createContentMedia() throws Exception {
+        ContentMedia contentMedia = contentMedias().get(0);
+
+        String json = json(contentMedia);
+        MockHttpServletResponse response = mockMvc.perform(post("/contentMedias")
+                .content(json)
+                .contentType(contentType))
+                .andExpect(status().isCreated())
+                .andReturn().getResponse();
+
+        return response.getHeader("Location");
     }
 }

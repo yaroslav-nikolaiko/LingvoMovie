@@ -81,10 +81,6 @@ public abstract class AbstractRestTest {
         this.mappingJackson2HttpMessageConverter.write(
                 o, MediaType.APPLICATION_JSON, mockHttpOutputMessage);
         return mockHttpOutputMessage.getBodyAsString();
-
-/*        ObjectMapper mapper = new ObjectMapper();
-        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        return mapper.writeValueAsString(o);*/
     }
 
     String json(Object o, Map<String, String> links) throws IOException {
