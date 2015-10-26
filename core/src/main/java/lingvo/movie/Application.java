@@ -1,6 +1,7 @@
 package lingvo.movie;
 
 
+import lingvo.movie.core.entity.ContentMedia;
 import lingvo.movie.core.entity.Dictionary;
 import lingvo.movie.core.entity.MediaItem;
 import lingvo.movie.core.entity.User;
@@ -35,7 +36,7 @@ public class Application extends SpringBootServletInitializer {
 
         @Override
         protected void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
-            config.exposeIdsFor(User.class, Dictionary.class, MediaItem.class);
+            config.exposeIdsFor(User.class, Dictionary.class, MediaItem.class, ContentMedia.class);
         }
     }
 }

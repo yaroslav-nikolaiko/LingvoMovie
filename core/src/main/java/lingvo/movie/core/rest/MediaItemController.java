@@ -46,7 +46,7 @@ public class MediaItemController {
                             HttpServletResponse response, HttpServletRequest request) {
         Dictionary dictionary = dictionaryRepository.findOne(dictionaryId);
         item.setDictionary(dictionary);
-        item =  mediaItemRepository.save(item);
+        item = mediaItemRepository.save(item);
         response.setStatus(HttpServletResponse.SC_CREATED);
         response.setHeader("Location", request.getContextPath()+"/"+MediaItemRepository.URL_PATH+"/"+item.getId());
         return item;

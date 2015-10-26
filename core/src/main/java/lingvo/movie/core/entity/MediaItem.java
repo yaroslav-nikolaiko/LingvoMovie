@@ -29,7 +29,8 @@ public class MediaItem {
     @Column(name="attr_value")
     Map<String, String> metaInfo = new HashMap<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "content_media_id", nullable = false)
     ContentMedia contentMedia;
 
 

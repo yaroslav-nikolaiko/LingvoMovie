@@ -1,12 +1,20 @@
 package lingvo.movie.core.rest;
 
+import lingvo.movie.core.dao.ContentMediaRepository;
 import lingvo.movie.core.dao.MediaItemRepository;
+import lingvo.movie.core.entity.ContentMedia;
 import lingvo.movie.core.entity.MediaItem;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.web.util.NestedServletException;
 
-import static junit.framework.Assert.assertEquals;
+import java.util.HashMap;
+import java.util.Map;
+
+import static lingvo.movie.core.utils.EntityFactory.contentMedias;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.Assert.assertEquals;
 import static lingvo.movie.core.utils.EntityFactory.mediaItems;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -19,21 +27,70 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class MediaItemControllerTest extends AbstractRestTest{
     @Autowired
     MediaItemRepository mediaItemRepository;
+    @Autowired
+    ContentMediaRepository contentMediaRepository;
 
     @Override
     public void setup() throws Exception {
         super.setup();
         admin = userRepository.save(admin);
-
     }
 
-    @Test
-    public void createItemInExistingDictionary() throws Exception {
+    @Test(expected = NestedServletException.class)
+    public void failedToCreateItemWithoutContentMedia() throws Exception {
         Long dictionaryId = admin.getDictionaries().get(0).getId();
         MediaItem mediaItem = mediaItems().get(0);
 
-        MockHttpServletResponse response = mockMvc.perform(post("/dictionaries/"+dictionaryId+"/mediaItems")
+        mockMvc.perform(post("/dictionaries/" + dictionaryId + "/mediaItems")
                 .content(json(mediaItem))
+                .contentType(contentType))
+                .andExpect(status().isInternalServerError());
+    }
+
+    @Test
+    public void createContentMediaTest() throws Exception {
+/*        ContentMedia contentMedia = contentMedias().get(0);
+
+        String json = json(contentMedia);
+        MockHttpServletResponse response = mockMvc.perform(post("/contentMedias")
+                .content(json)
+                .contentType(contentType))
+                .andExpect(status().isCreated())
+                .andReturn().getResponse();*/
+
+        String link = createContentMedia();
+
+        mockMvc.perform(get(link))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", notNullValue()));
+    }
+
+    public String createContentMedia() throws Exception {
+        ContentMedia contentMedia = contentMedias().get(0);
+
+        String json = json(contentMedia);
+        MockHttpServletResponse response = mockMvc.perform(post("/contentMedias")
+                .content(json)
+                .contentType(contentType))
+                .andExpect(status().isCreated())
+                .andReturn().getResponse();
+
+        return response.getHeader("Location");
+    }
+
+
+    @Test
+    public void createItemWithLinkToContentMediaInExistingDictionary() throws Exception {
+        String contentMediaLink = createContentMedia();
+        Long dictionaryId = admin.getDictionaries().get(0).getId();
+        MediaItem mediaItem = mediaItems().get(0);
+
+        Map<String, String> links = new HashMap<>();
+        links.put("contentMedia", contentMediaLink);
+
+        String json = json(mediaItem, links);
+        MockHttpServletResponse response = mockMvc.perform(post("/dictionaries/"+dictionaryId+"/mediaItems")
+                .content(json)
                 .contentType(contentType))
                 .andExpect(status().isCreated())
                 .andReturn().getResponse();
@@ -42,12 +99,15 @@ public class MediaItemControllerTest extends AbstractRestTest{
 
         mockMvc.perform(get(link))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name", is(mediaItem.getName())));
+                .andExpect(jsonPath("$.name", is(mediaItem.getName())))
+                .andExpect(jsonPath("$._links.contentMedia", notNullValue()));
     }
+
+
 
     @Test
     public void patchShouldChangeNameAndLeaveTheRest() throws Exception {
-        createItemInExistingDictionary();
+        createItemWithLinkToContentMediaInExistingDictionary();
         MediaItem mediaItem = mediaItemRepository.getAllByDictionaryId(admin.getDictionaries().get(0).getId()).get(0);
 
         MockHttpServletResponse response = mockMvc.perform(

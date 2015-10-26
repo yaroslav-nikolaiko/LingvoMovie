@@ -1,7 +1,6 @@
 package lingvo.movie.core.dao;
 
 import lingvo.movie.core.entity.ContentMedia;
-import lingvo.movie.core.entity.Dictionary;
 import lingvo.movie.core.entity.MediaItem;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,7 @@ public class MediaItemRepositoryTest extends AbstractRepositoryTest{
     @Autowired ContentMediaRepository contentMediaRepository;
 
     @Test
-    public void saveMediaContentFirstAndThanMediaItems() throws Exception {
+    public void saveContentMediaFirstAndThanMediaItems() throws Exception {
         MediaItem item = mediaItems().get(0);
         item.setDictionary(admin.getDictionaries().get(0));
         ContentMedia content = contentMedias().get(0);
@@ -35,7 +34,7 @@ public class MediaItemRepositoryTest extends AbstractRepositoryTest{
 
     @Test
     public void deletingMediaItemShouldNotDeleteMediaContent() throws Exception {
-        saveMediaContentFirstAndThanMediaItems();
+        saveContentMediaFirstAndThanMediaItems();
 
         Iterable<MediaItem> all = mediaItemRepository.findAll();
         MediaItem item = all.iterator().next();

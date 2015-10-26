@@ -1,5 +1,10 @@
 package lingvo.movie.core.rest;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import lingvo.movie.Application;
 import lingvo.movie.core.dao.UserRepository;
 import lingvo.movie.core.entity.User;
@@ -24,6 +29,7 @@ import javax.persistence.PersistenceContext;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.Arrays;
+import java.util.Map;
 
 import static lingvo.movie.core.utils.EntityFactory.userWithRoleADMIN;
 import static lingvo.movie.core.utils.EntityFactory.userWithRoleUSER;
@@ -75,5 +81,17 @@ public abstract class AbstractRestTest {
         this.mappingJackson2HttpMessageConverter.write(
                 o, MediaType.APPLICATION_JSON, mockHttpOutputMessage);
         return mockHttpOutputMessage.getBodyAsString();
+
+/*        ObjectMapper mapper = new ObjectMapper();
+        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        return mapper.writeValueAsString(o);*/
+    }
+
+    String json(Object o, Map<String, String> links) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonStr = json(o);
+        ObjectNode json = (ObjectNode) mapper.readTree(jsonStr);
+        links.forEach(json::put);
+        return json.toString();
     }
 }

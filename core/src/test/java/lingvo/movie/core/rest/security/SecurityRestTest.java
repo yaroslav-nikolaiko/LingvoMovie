@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import javax.servlet.http.Cookie;
 
+import static lingvo.movie.core.utils.EntityFactory.contentMedias;
 import static lingvo.movie.core.utils.EntityFactory.dictionary;
 import static lingvo.movie.core.utils.EntityFactory.mediaItems;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
@@ -112,6 +113,7 @@ public class SecurityRestTest extends AbstractSecurityRestTest{
     @Test
     public void userCouldAccessOwnMediaItems() throws Exception {
         MediaItem item = mediaItems().get(0);
+        item.setContentMedia(contentMedias().get(0));
         Dictionary dictionary = user.getDictionaries().get(0);
         Long dictionaryID = dictionary.getId();
 
@@ -127,6 +129,7 @@ public class SecurityRestTest extends AbstractSecurityRestTest{
     @Test
     public void userForbiddenAccessAnotherMediaItems() throws Exception {
         MediaItem item = mediaItems().get(0);
+        item.setContentMedia(contentMedias().get(0));
         Dictionary dictionary = admin.getDictionaries().get(0);
         Long dictionaryID = dictionary.getId();
 

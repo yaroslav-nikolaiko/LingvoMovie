@@ -14,7 +14,7 @@ import java.util.Map;
 @Entity
 @Table(name = "CONTENT_MEDIA")
 @Data
-@ToString(of = {"hashSum", "id"}) @EqualsAndHashCode(of = {"hashSum", "physicalStorage", "originalText"})
+@ToString(of = {"hashSum"}) @EqualsAndHashCode(of = {"hashSum"})
 public class ContentMedia {
     @Id @GeneratedValue
     Long id;
