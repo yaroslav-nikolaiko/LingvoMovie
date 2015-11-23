@@ -3,7 +3,7 @@
  * Created by yaroslav on 27.06.15.
  */
 
-controllers.controller('DictionaryModalController', function($scope,$modalInstance, LookupService, DictionaryService, UserService) {
+controllers.controller('DictionaryModalController', function($scope,$modalInstance, LookupService, DictionaryService, MediaItemService) {
     var self = this;
     this.init = function () {
         LookupService.lookup('language').then(function(response) {
@@ -33,6 +33,7 @@ controllers.controller('DictionaryModalController', function($scope,$modalInstan
     $scope.update = function (callback) {
         DictionaryService.update($scope.dictionaries).then(function(){
             DictionaryService.setCurrent($scope.selectedID);
+            MediaItemService.reload();
             if(callback) callback();
         });
     };
