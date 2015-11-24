@@ -5,9 +5,9 @@
 
 services.service('RestUtilsService', ['halClient', function (halClient) {
     this.entryPoint_cache;
-    this.entryPoint = function() {
+    this.entryPoint = function(options) {
         if(this.entryPoint_cache) return this.entryPoint_cache;
-        return this.entryPoint_cache = halClient.$get('api');
+        return this.entryPoint_cache = halClient.$get('api', options);
     };
 
     this.resolveResponse = function(response, entityName, single) {

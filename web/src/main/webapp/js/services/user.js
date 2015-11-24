@@ -20,8 +20,8 @@ services.service('UserService', ['halClient','RestUtilsService', function (halCl
     this.load = function(id, callback) {
         var self = this;
         id = id ? id : this.get().id;
-        return RestUtilsService.entryPoint().then(function (entry) {
-            return halClient.$get(entry.$href('users') + "/" + id).then(function(user) {
+        return RestUtilsService.entryPoint({async:false}).then(function (entry) {
+            return halClient.$get(entry.$href('users') + "/" + id, {async:false}).then(function(user) {
                 self.user = user;
                 if(callback) callback();
                 return user;
