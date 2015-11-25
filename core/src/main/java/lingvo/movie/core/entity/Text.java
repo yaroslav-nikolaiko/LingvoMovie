@@ -12,7 +12,7 @@ import javax.persistence.*;
  * Created by yaroslav on 01.03.15.
  */
 @Entity
-@Table(name = "TEXT")
+@Table(name = "GENERAL")
 @Data
 @ToString(of = {"sourceId", "language", "type"}) @EqualsAndHashCode(of = {"sourceId", "language", "type"})
 public class Text {
@@ -26,4 +26,7 @@ public class Text {
     Language language;
     Long sourceId;
     String ranking;
+
+    @Transient
+    byte[] content;
 }

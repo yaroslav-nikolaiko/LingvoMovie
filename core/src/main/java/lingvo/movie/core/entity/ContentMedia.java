@@ -1,5 +1,7 @@
 package lingvo.movie.core.entity;
 
+import lingvo.movie.core.entity.lookup.ContentType;
+import lingvo.movie.core.entity.lookup.TextType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -19,9 +21,11 @@ public class ContentMedia {
     @Id @GeneratedValue
     Long id;
     Long hashSum;
+    @Enumerated(EnumType.STRING)
+    ContentType type;
     @OneToOne
     PhysicalStorage physicalStorage;
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     Text originalText;
 
     @ManyToMany
